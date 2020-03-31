@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Online Attendance</string>
+    <string name="activity_main_title">Online Attendance</string>
+
+    <!-- MainActivity Strings -->
+    <string name="login">Login</string>
+    <string name="new_profile">New Profile</string>
+
+    <!-- LoginActivity Strings -->
+    <string name="email_address">Email Address</string>
+    <string name="password">Password</string>
+    <string name="example_email">email_address@domain.edu</string>
+    <string name="example_password">P@55word123!</string>
+
+    <!-- NewProfileActivity Strings  -->
+    <string name="new_teacher">Teacher Profile</string>
+    <string name="new_student">Student Profile</string>
+
+</resources>

@@ -9,13 +9,13 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="218dp"
-        android:layout_height="62dp"
+        android:layout_width="278dp"
+        android:layout_height="70dp"
         android:layout_marginStart="96dp"
         android:layout_marginTop="51dp"
         android:layout_marginEnd="97dp"
         android:layout_marginBottom="610dp"
-        android:fontFamily="@font/sacramento"
+        android:fontFamily="sans-serif"
         android:text="@string/new_teacher"
         android:textAlignment="center"
         android:textSize="36sp"

@@ -9,13 +9,13 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="226dp"
-        android:layout_height="59dp"
+        android:layout_width="271dp"
+        android:layout_height="58dp"
         android:layout_marginStart="92dp"
         android:layout_marginTop="51dp"
         android:layout_marginEnd="93dp"
         android:layout_marginBottom="615dp"
-        android:fontFamily="@font/sacramento"
+        android:fontFamily="sans-serif"
         android:text="@string/new_student"
         android:textAlignment="center"
         android:textSize="36sp"

@@ -15,7 +15,7 @@
         android:layout_marginTop="51dp"
         android:layout_marginEnd="123dp"
         android:layout_marginBottom="619dp"
-        android:fontFamily="@font/sacramento"
+        android:fontFamily="sans-serif"
         android:text="@string/new_profile"
         android:textAlignment="center"
         android:textSize="36sp"

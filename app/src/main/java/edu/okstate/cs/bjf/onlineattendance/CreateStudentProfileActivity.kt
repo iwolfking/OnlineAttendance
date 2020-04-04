@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_create_student_profile.*
 import kotlinx.android.synthetic.main.activity_create_teacher_profile.*
 
 class CreateStudentProfileActivity : AppCompatActivity() {
@@ -17,7 +18,7 @@ class CreateStudentProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_student_profile)
 
-        chooseProfilePcitureButton.setOnClickListener {
+        chooseProfilePcitureButton2.setOnClickListener {
             //check runtime permission
             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
                 PackageManager.PERMISSION_DENIED){
@@ -68,7 +69,7 @@ class CreateStudentProfileActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
-            chooseProfilePcitureButton.setImageURI(data?.data)
+            chooseProfilePcitureButton2.setImageURI(data?.data)
         }
     }
 }

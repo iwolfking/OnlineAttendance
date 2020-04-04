@@ -8,18 +8,163 @@
     tools:context=".CreateStudentProfileActivity">
 
     <TextView
+        android:id="@+id/confirmPasswordLabelNewStudentProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:text="@string/confirm_password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditText2" />
+
+    <EditText
+        android:id="@+id/firstNameEditText2"
+        android:layout_width="300dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="25dp"
+        android:ems="10"
+        android:hint="John/Jane"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/firstNameLabelNewStudentProfile" />
+
+    <EditText
+        android:id="@+id/courseNameEditText2"
+        android:layout_width="300dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="25dp"
+        android:ems="10"
+        android:hint="Computer Science"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/majorNameLabelNewStudentProfile" />
+
+    <TextView
+        android:id="@+id/lastNameLabelNewStudentProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:text="@string/last_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/firstNameEditText2" />
+
+    <EditText
+        android:id="@+id/lastNameEditText2"
+        android:layout_width="300dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="25dp"
+        android:ems="10"
+        android:hint="Doe"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lastNameLabelNewStudentProfile" />
+
+    <EditText
+        android:id="@+id/emailEditText2"
+        android:layout_width="300dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="25dp"
+        android:ems="10"
+        android:hint="john/jane_doe@domain.com"
+        android:inputType="textEmailAddress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailLabelNewStudentProfile" />
+
+    <Button
+        android:id="@+id/submitNewTeacherProfile2"
+        android:layout_width="243dp"
+        android:layout_height="69dp"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="84dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="@string/submit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/courseNameEditText2" />
+
+    <EditText
+        android:id="@+id/confirmPasswordEditText2"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="25dp"
+        android:ems="10"
+        android:hint="P@55w0rd1!"
+        android:inputType="textPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordLabelNewStudentProfile" />
+
+    <TextView
+        android:id="@+id/majorNameLabelNewStudentProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:text="@string/major"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordEditText2" />
+
+    <EditText
+        android:id="@+id/passwordEditText2"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="25dp"
+        android:ems="10"
+        android:hint="P@55w0rd1!"
+        android:inputType="textPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordLabelNewStudentProfile" />
+
+    <ImageButton
+        android:id="@+id/chooseProfilePcitureButton2"
+        android:layout_width="139dp"
+        android:layout_height="134dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="136dp"
+        android:contentDescription="Holds profile image. "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+    <TextView
+        android:id="@+id/emailLabelNewStudentProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:text="@string/email"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lastNameEditText2" />
+
+    <TextView
+        android:id="@+id/passwordLabelNewStudentProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:text="@string/password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailEditText2" />
+
+    <TextView
+        android:id="@+id/firstNameLabelNewStudentProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="156dp"
+        android:text="@string/first_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <TextView
         android:id="@+id/textView2"
         android:layout_width="271dp"
         android:layout_height="58dp"
-        android:layout_marginStart="92dp"
-        android:layout_marginTop="51dp"
-        android:layout_marginEnd="93dp"
-        android:layout_marginBottom="615dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginEnd="70dp"
         android:fontFamily="sans-serif"
         android:text="@string/new_student"
         android:textAlignment="center"
         android:textSize="36sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

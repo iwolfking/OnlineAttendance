@@ -23,4 +23,7 @@
     <string name="confirm_password">Confirm Password:</string>
     <string name="course_name">Course Name:</string>
     <string name="submit">Submit</string>
+
+    <!-- NewStudentProfileActivity Strings  -->
+    <string name="major">Major:</string>
 </resources>

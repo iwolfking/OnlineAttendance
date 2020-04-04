@@ -11,136 +11,166 @@
         android:id="@+id/textView"
         android:layout_width="279dp"
         android:layout_height="53dp"
+        android:layout_marginStart="66dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginEnd="66dp"
+        android:layout_marginBottom="13dp"
         android:fontFamily="sans-serif"
         android:text="@string/new_teacher"
         android:textAlignment="center"
         android:textSize="36sp"
-        tools:layout_editor_absoluteX="66dp"
-        tools:layout_editor_absoluteY="27dp" />
+        app:layout_constraintBottom_toTopOf="@+id/chooseProfilePcitureButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/chooseProfilePcitureButton"
         android:layout_width="139dp"
         android:layout_height="134dp"
+        android:layout_marginStart="136dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="136dp"
         android:contentDescription="Holds profile image. "
-        app:srcCompat="@android:drawable/ic_menu_gallery"
-        tools:layout_editor_absoluteX="136dp"
-        tools:layout_editor_absoluteY="109dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:srcCompat="@android:drawable/ic_menu_gallery" />
 
     <TextView
         android:id="@+id/firstNameLabelNewTeacherProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="156dp"
         android:text="@string/first_name"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="236dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
         android:id="@+id/lastNameLabelNewTeacherProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
         android:text="@string/last_name"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="299dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/firstNameEditText" />
 
     <TextView
         android:id="@+id/passwordLabelNewTeacherProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
         android:text="@string/password"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="429dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailEditText" />
 
     <TextView
         android:id="@+id/confirmPasswordLabelNewTeacherProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
         android:text="@string/confirm_password"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="496dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
 
     <TextView
         android:id="@+id/courseNameLabelNewTeacherProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
         android:text="@string/course_name"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="563dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordEditText" />
 
     <TextView
         android:id="@+id/emailLabelNewTeacherProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="1dp"
         android:text="@string/email"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="363dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lastNameEditText" />
 
     <Button
         android:id="@+id/submitNewTeacherProfile"
         android:layout_width="243dp"
         android:layout_height="69dp"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="84dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="@color/colorPrimary"
         android:text="@string/submit"
-        tools:layout_editor_absoluteX="84dp"
-        tools:layout_editor_absoluteY="646dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/courseNameEditText" />
 
     <EditText
         android:id="@+id/firstNameEditText"
         android:layout_width="300dp"
         android:layout_height="44dp"
+        android:layout_marginStart="40dp"
         android:ems="10"
         android:hint="John/Jane"
         android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="255dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/firstNameLabelNewTeacherProfile" />
 
     <EditText
         android:id="@+id/lastNameEditText"
         android:layout_width="300dp"
         android:layout_height="44dp"
+        android:layout_marginStart="40dp"
         android:ems="10"
         android:hint="Doe"
         android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="318dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lastNameLabelNewTeacherProfile" />
 
     <EditText
         android:id="@+id/courseNameEditText"
         android:layout_width="300dp"
         android:layout_height="44dp"
+        android:layout_marginStart="40dp"
         android:ems="10"
         android:hint="CS4153"
         android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="582dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/courseNameLabelNewTeacherProfile" />
 
     <EditText
         android:id="@+id/emailEditText"
         android:layout_width="300dp"
         android:layout_height="47dp"
+        android:layout_marginStart="40dp"
         android:ems="10"
         android:hint="john/jane_doe@domain.com"
         android:inputType="textEmailAddress"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="382dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailLabelNewTeacherProfile" />
 
     <EditText
         android:id="@+id/passwordEditText"
         android:layout_width="300dp"
         android:layout_height="48dp"
+        android:layout_marginStart="40dp"
         android:ems="10"
         android:hint="P@55w0rd1!"
         android:inputType="textPassword"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="448dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordLabelNewTeacherProfile" />
 
     <EditText
         android:id="@+id/confirmPasswordEditText"
         android:layout_width="300dp"
         android:layout_height="48dp"
+        android:layout_marginStart="40dp"
         android:ems="10"
         android:hint="P@55w0rd1!"
         android:inputType="textPassword"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="515dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordLabelNewTeacherProfile" />
 </androidx.constraintlayout.widget.ConstraintLayout>

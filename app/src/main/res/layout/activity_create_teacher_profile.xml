@@ -10,17 +10,29 @@
     <TextView
         android:id="@+id/textView"
         android:layout_width="278dp"
-        android:layout_height="70dp"
+        android:layout_height="0dp"
         android:layout_marginStart="96dp"
         android:layout_marginTop="51dp"
         android:layout_marginEnd="97dp"
-        android:layout_marginBottom="610dp"
+        android:layout_marginBottom="16dp"
         android:fontFamily="sans-serif"
         android:text="@string/new_teacher"
         android:textAlignment="center"
         android:textSize="36sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/chooseProfilePcitureButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/chooseProfilePcitureButton"
+        android:layout_width="81dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="514dp"
+        android:contentDescription="Holds profile image. "
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:srcCompat="@android:drawable/ic_menu_gallery" />
 </androidx.constraintlayout.widget.ConstraintLayout>

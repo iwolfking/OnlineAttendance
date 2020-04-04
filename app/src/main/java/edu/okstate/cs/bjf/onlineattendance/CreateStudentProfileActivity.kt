@@ -69,7 +69,7 @@ class CreateStudentProfileActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
-            chooseProfilePcitureButton.setImageURI(data?.data)
+            chooseProfilePcitureButton2.setImageURI(data?.data)
         }
     }
 }

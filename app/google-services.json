@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "370276549220",
+    "firebase_url": "https://online-attendance-6f15a.firebaseio.com",
+    "project_id": "online-attendance-6f15a",
+    "storage_bucket": "online-attendance-6f15a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:370276549220:android:aaff9a7af4322b07d81571",
+        "android_client_info": {
+          "package_name": "edu.okstate.cs.bjf.onlineattendance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "370276549220-tii91ba3jtm74l4lhrskm8q0gpce96js.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtIqXTkL5mgk9lzxd7SsLqbKP1I5MXVgM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "370276549220-tii91ba3jtm74l4lhrskm8q0gpce96js.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_create_teacher_profile.*
 
 
@@ -21,6 +22,7 @@ class CreateTeacherProfileActivity : AppCompatActivity() {
 
     // Variables Needed via Firebase
     private var mAuth: FirebaseAuth? = null
+    var db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +47,7 @@ class CreateTeacherProfileActivity : AppCompatActivity() {
 
         submitNewTeacherProfile.setOnClickListener {
             createAccount(emailEditText.text.toString(), passwordEditText.text.toString());
+            addCourseToFirestore()
         }
     }
 
@@ -122,6 +125,34 @@ class CreateTeacherProfileActivity : AppCompatActivity() {
                     Log.d("Username: ", "User profile updated.")
                 }
             }
+    }
+
+    private fun addCourseToFirestore() {
+        // Create a new user with a first and last name
+
+        // Create a new user with a first and last name
+        val course: MutableMap<String, Any> = HashMap()
+        course["teacher"] = firstNameEditText.text.toString() + " " + lastNameEditText.text.toString()
+        course["teacher-email"] = emailEditText.text.toString()
+        course["course-name"] = courseNameEditText.text.toString()
+        course["course-start"] = "0000"
+        course["course-end"] = "0000"
+        course["id"] = "0"
+        course["building"] = "Bldg 1"
+        course["room"] = "Rm 101"
+
+// Add a new document with a generated ID
+
+// Add a new document with a generated ID
+        db.collection("Courses")
+            .add(course)
+            .addOnSuccessListener { documentReference ->
+                Log.d(
+                    "Course Added",
+                    "DocumentSnapshot added with ID: " + documentReference.id
+                )
+            }
+            .addOnFailureListener { e -> Log.w("Course Not Added", "Error adding document", e) }
     }
 
 }

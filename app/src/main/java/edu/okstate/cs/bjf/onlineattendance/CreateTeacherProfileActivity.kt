@@ -4,15 +4,23 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.UserProfileChangeRequest
 import kotlinx.android.synthetic.main.activity_create_teacher_profile.*
+
 
 class CreateTeacherProfileActivity : AppCompatActivity() {
 
     /* Resource Found On How To Choose Profile Picture: https://devofandroid.blogspot.com/2018/09/pick-image-from-gallery-android-studio_15.html  */
+
+    // Variables Needed via Firebase
+    private var mAuth: FirebaseAuth? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +39,12 @@ class CreateTeacherProfileActivity : AppCompatActivity() {
                 //permission already granted
                 pickImageFromGallery()
             }
+        }
+
+        mAuth = FirebaseAuth.getInstance();
+
+        submitNewTeacherProfile.setOnClickListener {
+            createAccount(emailEditText.text.toString(), passwordEditText.text.toString());
         }
     }
 
@@ -72,4 +86,42 @@ class CreateTeacherProfileActivity : AppCompatActivity() {
             chooseProfilePcitureButton.setImageURI(data?.data)
         }
     }
+
+    private fun createAccount(email: String, password: String) {
+        Log.d("Created Account", "createAccount:$email")
+        mAuth!!.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(
+                this
+            ) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d("Created User", "createUserWithEmail:success")
+                    val user = mAuth!!.currentUser
+                    // updateUI(user)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(
+                        "Failed User Creation",
+                        "createUserWithEmail:failure",
+                        task.exception
+                    )
+                }
+
+                // ...
+            }
+    }
+
+    private fun addUserNameToUser(user: FirebaseUser?) {
+        val username: String = firstNameEditText.text.toString() + " " + lastNameEditText.text.toString()
+        val profileUpdates = UserProfileChangeRequest.Builder()
+            .setDisplayName(username)
+            .build()
+        user!!.updateProfile(profileUpdates)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d("Username: ", "User profile updated.")
+                }
+            }
+    }
+
 }

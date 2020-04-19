@@ -192,7 +192,7 @@ class CreateTeacherProfileActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val TAG = "EmailPassword"
+        const val TAG = "EmailPassword"
         // private const val RC_MULTI_FACTOR = 9005
         //image pick code
         private const val IMAGE_PICK_CODE = 1000

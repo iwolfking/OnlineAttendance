@@ -151,6 +151,8 @@ class CreateTeacherProfileActivity : AppCompatActivity() {
                     "Course Added",
                     "DocumentSnapshot added with ID: " + documentReference.id
                 )
+                val teacherProfileIntent = Intent(this, TeacherProfile::class.java)
+                startActivity(teacherProfileIntent)
             }
             .addOnFailureListener { e -> Log.w("Course Not Added", "Error adding document", e) }
     }

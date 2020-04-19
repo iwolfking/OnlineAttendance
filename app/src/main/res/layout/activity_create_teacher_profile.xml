@@ -26,6 +26,8 @@
 
     <ImageButton
         android:id="@+id/chooseProfilePcitureButton"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
         android:layout_width="139dp"
         android:layout_height="134dp"
         android:layout_marginStart="136dp"

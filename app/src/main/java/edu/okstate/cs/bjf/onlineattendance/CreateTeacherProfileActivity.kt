@@ -46,8 +46,9 @@ class CreateTeacherProfileActivity : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance();
 
         submitNewTeacherProfile.setOnClickListener {
-            createAccount(emailEditText.text.toString(), passwordEditText.text.toString());
-            addCourseToFirestore()
+            // createAccount(emailEditText.text.toString(), passwordEditText.text.toString());
+            // addCourseToFirestore()
+
         }
     }
 
@@ -90,6 +91,11 @@ class CreateTeacherProfileActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Commenting out the below code, so we may try to re-implement adding a teacher
+     * to the Firebase database. This works, but isn't the type of functionality
+     * we are looking for.
+     *
     private fun createAccount(email: String, password: String) {
         Log.d("Created Account", "createAccount:$email")
         mAuth!!.createUserWithEmailAndPassword(email, password)
@@ -141,9 +147,9 @@ class CreateTeacherProfileActivity : AppCompatActivity() {
         course["building"] = "Bldg 1"
         course["room"] = "Rm 101"
 
-// Add a new document with a generated ID
 
-// Add a new document with a generated ID
+
+        // Add a new document with a generated ID
         db.collection("Courses")
             .add(course)
             .addOnSuccessListener { documentReference ->
@@ -151,10 +157,11 @@ class CreateTeacherProfileActivity : AppCompatActivity() {
                     "Course Added",
                     "DocumentSnapshot added with ID: " + documentReference.id
                 )
+                println("Made it!")
                 val teacherProfileIntent = Intent(this, TeacherProfile::class.java)
                 startActivity(teacherProfileIntent)
             }
             .addOnFailureListener { e -> Log.w("Course Not Added", "Error adding document", e) }
-    }
+    } */
 
 }

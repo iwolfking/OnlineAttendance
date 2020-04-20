@@ -1,11 +1,14 @@
 package edu.okstate.cs.bjf.onlineattendance
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import kotlinx.android.synthetic.main.activity_teacher_profile.*
 
 
 class TeacherProfile : AppCompatActivity() {
@@ -13,12 +16,16 @@ class TeacherProfile : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     var user = FirebaseAuth.getInstance().currentUser
     var db = FirebaseFirestore.getInstance()
+    private var mStorageRef: StorageReference? = null
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_teacher_profile)
 
         auth = FirebaseAuth.getInstance()
+        mStorageRef = FirebaseStorage.getInstance().reference;
         updateUI()
     }
 
@@ -30,6 +37,8 @@ class TeacherProfile : AppCompatActivity() {
             // FirebaseUser.getIdToken() instead.
             val uid = user!!.uid
             getTeacherName()
+            getCourseName()
+            getProfilePicture()
         }
     }
 
@@ -44,6 +53,7 @@ class TeacherProfile : AppCompatActivity() {
 
                         if (document["teacher"] == uid) {
                             println("Teacher Name: " + document["firstName"] + " " + document["lastName"])
+                            teacherName.text = (document["firstName"].toString() + " " + document["lastName"].toString())
                         } else {
                             Log.d(
                                 "Document",
@@ -56,6 +66,54 @@ class TeacherProfile : AppCompatActivity() {
                     Log.w("Empty", "Error getting documents.", task.exception)
                 }
             }
+    }
+
+    private fun getCourseName() {
+        val uid = user!!.uid
+
+        db.collection("courses")
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (document in task.result!!) {
+
+                        if (document["teacher"] == uid) {
+                            println("Course Name: " + document["course"])
+                            courseName.text = (document["course"].toString())
+                        } else {
+                            Log.d(
+                                "Document",
+                                document.id + " => " + document.data
+                            )
+                        }
+
+                    }
+                } else {
+                    Log.w("Empty", "Error getting documents.", task.exception)
+                }
+            }
+    }
+
+    private fun getProfilePicture() {
+        val uid = user!!.uid
+        // Create a storage reference from our app
+
+
+        /*In this case we'll use this kind of reference*/
+        //Download file in Memory
+        val profilePictureRef = mStorageRef?.child("pics/$uid")
+
+        val ONE_MEGABYTE = 1024 * 1024.toLong()
+        profilePictureRef?.getBytes(ONE_MEGABYTE)?.addOnSuccessListener {
+            // Data for "images/island.jpg" is returns, use this as needed
+
+            println("Picture exists")
+            teacherProfilePicture.setImageBitmap(BitmapFactory.decodeByteArray(it, 0, it.size))
+        }?.addOnFailureListener {
+            // Handle any errors
+            println("ERROR")
+            println("Error" + uid + " doesn't exist.")
+        }
     }
 
 }

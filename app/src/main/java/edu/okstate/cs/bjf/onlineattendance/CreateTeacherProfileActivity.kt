@@ -162,6 +162,8 @@ class CreateTeacherProfileActivity : AppCompatActivity() {
             }
     }
 
+    // Reference material for Firestore: https://github.com/probelalkhan/Firebase-Authentication-Tutorial-2019/blob/master/app/src/main/java/net/simplifiedcoding/firebaseauthtutorial/ui/fragments/ProfileFragment.kt
+
     private fun uploadImageAndSaveUri(bitmap: Bitmap) {
         val baos = ByteArrayOutputStream()
         val storageRef = FirebaseStorage.getInstance()

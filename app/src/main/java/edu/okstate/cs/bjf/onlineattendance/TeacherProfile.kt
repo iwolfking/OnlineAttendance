@@ -37,6 +37,7 @@ class TeacherProfile : AppCompatActivity() {
             // FirebaseUser.getIdToken() instead.
             val uid = user!!.uid
             getTeacherName()
+            getEmailAddress()
             getCourseName()
             getProfilePicture()
         }
@@ -80,6 +81,32 @@ class TeacherProfile : AppCompatActivity() {
                         if (document["teacher"] == uid) {
                             println("Course Name: " + document["course"])
                             courseName.text = (document["course"].toString())
+                        } else {
+                            Log.d(
+                                "Document",
+                                document.id + " => " + document.data
+                            )
+                        }
+
+                    }
+                } else {
+                    Log.w("Empty", "Error getting documents.", task.exception)
+                }
+            }
+    }
+
+    private fun getEmailAddress() {
+        val uid = user!!.uid
+
+        db.collection("teachers")
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (document in task.result!!) {
+
+                        if (document["teacher"] == uid) {
+                            println("Email Address: " + document["email"])
+                            emailAddress.text = (document["email"].toString())
                         } else {
                             Log.d(
                                 "Document",

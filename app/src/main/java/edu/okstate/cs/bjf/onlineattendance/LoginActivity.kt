@@ -6,14 +6,17 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_create_teacher_profile.*
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.loginButton
+import kotlinx.android.synthetic.main.activity_teacher_profile.*
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+    var db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +43,55 @@ class LoginActivity : AppCompatActivity() {
                          *  or a teacher. If they're a student, go to student profile. If they're a teacher
                          *  go to teacher profile. Currently, just goes to TeacherProfile below.
                          */
-                        val teacherIntent = Intent(this, TeacherProfile::class.java)
-                        startActivity(teacherIntent)
+
+
+                        val uid = user!!.uid
+
+                        db.collection("teachers")
+                            .get()
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    for (document in task.result!!) {
+
+                                        if (document["teacher"] == uid) {
+                                            val teacherIntent = Intent(this, TeacherProfile::class.java)
+                                            startActivity(teacherIntent)
+                                        } else {
+                                            Log.d(
+                                                "Document",
+                                                document.id + " => " + document.data
+                                            )
+                                        }
+
+                                    }
+                                } else {
+                                    Log.w("Empty", "Error getting documents.", task.exception)
+                                }
+                            }
+
+                        db.collection("students")
+                            .get()
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    for (document in task.result!!) {
+
+                                        if (document["student"] == uid) {
+                                            val studentIntent = Intent(this, StudentProfile::class.java)
+                                            startActivity(studentIntent)
+                                        } else {
+                                            Log.d(
+                                                "Document",
+                                                document.id + " => " + document.data
+                                            )
+                                        }
+
+                                    }
+                                } else {
+                                    Log.w("Empty", "Error getting documents.", task.exception)
+                                }
+                            }
+
+
                     }
                     // updateUI(user)
                 } else {

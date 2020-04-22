@@ -130,7 +130,7 @@ class TeacherProfile : AppCompatActivity() {
         //Download file in Memory
         val profilePictureRef = mStorageRef?.child("pics/$uid")
 
-        val ONE_MEGABYTE = 1024 * 1024.toLong()
+        val ONE_MEGABYTE = 1024 * 1024 * 50.toLong()
         profilePictureRef?.getBytes(ONE_MEGABYTE)?.addOnSuccessListener {
             // Data for "images/island.jpg" is returns, use this as needed
 

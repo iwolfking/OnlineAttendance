@@ -1,5 +1,6 @@
 package edu.okstate.cs.bjf.onlineattendance
 
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
@@ -27,7 +28,15 @@ class TeacherProfile : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         mStorageRef = FirebaseStorage.getInstance().reference;
         updateUI()
+
+        // Submit Button goes to TeacherCreateDesks
+        submitTimes.setOnClickListener {
+            val teacherCreateDesksIntent = Intent(this, TeacherCreateDesks::class.java)
+            startActivity(teacherCreateDesksIntent)
+        }
     }
+
+
 
     private fun updateUI() {
         if (user != null) {

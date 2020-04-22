@@ -39,11 +39,6 @@ class LoginActivity : AppCompatActivity() {
                     Log.d(LoginActivity.TAG, "signInWithEmail:success")
                     val user = auth.currentUser
                     if (user != null) {
-                        /** TODO (1): Check Storage Database to see if the user logging in is a student
-                         *  or a teacher. If they're a student, go to student profile. If they're a teacher
-                         *  go to teacher profile. Currently, just goes to TeacherProfile below.
-                         */
-
 
                         val uid = user!!.uid
 

@@ -7,22 +7,19 @@
     android:background="#FF6121"
     tools:context=".LoginActivity">
 
-    <!-- TODO(1): Fix constraints for LoginActivity -->
+    <!-- COMPLETED(1): Fix constraints for LoginActivity -->
 
     <TextView
         android:id="@+id/loginTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="166dp"
-        android:layout_marginTop="51dp"
-        android:layout_marginEnd="166dp"
-        android:layout_marginBottom="607dp"
+        android:layout_marginTop="63dp"
         android:fontFamily="sans-serif"
         android:text="@string/login"
         android:textAlignment="center"
         android:textSize="36sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,10 +28,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="38dp"
-        android:layout_marginTop="231dp"
-        android:layout_marginBottom="285dp"
+        android:layout_marginTop="199dp"
         android:text="@string/email_address"
-        app:layout_constraintBottom_toTopOf="@+id/loginButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,51 +37,46 @@
         android:id="@+id/passwordTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="27dp"
         android:text="@string/password"
-        app:layout_constraintBottom_toTopOf="@+id/passwordFieldEditText"
-        app:layout_constraintStart_toStartOf="@+id/passwordFieldEditText"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailFieldEditText" />
 
     <EditText
         android:id="@+id/emailFieldEditText"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="52dp"
+        android:layout_width="335dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="15dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/example_email"
         android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/passwordTextView"
-        app:layout_constraintEnd_toEndOf="@+id/passwordFieldEditText"
-        app:layout_constraintStart_toStartOf="@+id/emailAddressTextView"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailAddressTextView" />
 
     <EditText
         android:id="@+id/passwordFieldEditText"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="335dp"
+        android:layout_height="51dp"
         android:layout_marginStart="38dp"
-        android:layout_marginEnd="38dp"
-        android:layout_marginBottom="301dp"
+        android:layout_marginTop="25dp"
         android:ems="10"
         android:hint="@string/example_password"
         android:importantForAutofill="no"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordTextView" />
 
     <Button
         android:id="@+id/loginButton"
         android:layout_width="243dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="127dp"
+        android:layout_height="86dp"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="114dp"
         android:backgroundTint="@color/colorPrimary"
         android:text="@string/login"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailAddressTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordFieldEditText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

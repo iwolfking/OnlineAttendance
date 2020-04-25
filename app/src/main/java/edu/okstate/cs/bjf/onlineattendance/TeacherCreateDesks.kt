@@ -98,4 +98,11 @@ class TeacherCreateDesks : AppCompatActivity() {
             println("Error" + uid + " doesn't exist.")
         }
     }
+
+    /** TODO(2): Implement a Kotlin Class/structure to allow a teacher to create
+     *           the number of desks for columns/rows that the students may choose
+     *           from; then submit this to the database, and create a grid layout
+     *           of desks for the teacher to see.
+      */
+
 }

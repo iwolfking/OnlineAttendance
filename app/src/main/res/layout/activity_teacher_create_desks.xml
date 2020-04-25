@@ -42,9 +42,9 @@
 
     <ImageButton
         android:id="@+id/editSeatsButton"
-        android:background="@null"
         android:layout_width="64dp"
         android:layout_height="62dp"
+        android:background="@null"
         app:srcCompat="@android:drawable/ic_menu_manage"
         tools:layout_editor_absoluteX="331dp"
         tools:layout_editor_absoluteY="93dp" />

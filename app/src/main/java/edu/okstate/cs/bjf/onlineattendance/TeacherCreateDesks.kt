@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_teacher_create_desks.*
 import kotlinx.android.synthetic.main.activity_teacher_profile.*
 
@@ -30,6 +31,12 @@ class TeacherCreateDesks : AppCompatActivity() {
         // Submit Button goes to TeacherCreateDesks
         submitAttendance.setOnClickListener {
             // Do Nothing.
+        }
+
+        //
+        editSeatsButton.setOnClickListener {
+            val setColumnsAndRowsForSeatsIntent = Intent(this, SetColumnsAndRowsForSeats::class.java)
+            startActivity(setColumnsAndRowsForSeatsIntent)
         }
     }
 

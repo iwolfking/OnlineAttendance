@@ -9,6 +9,16 @@
 
     <!-- TODO: Fix contstraints for page. -->
 
+    <ImageButton
+        android:id="@+id/testStudentButton"
+        android:layout_width="73dp"
+        android:layout_height="70dp"
+        android:backgroundTint="#E91E63"
+        android:contentDescription="g8IuOC8EnfhCOFaEQgv9u0ZVeGH2"
+        app:srcCompat="@drawable/ic_launcher_foreground"
+        tools:layout_editor_absoluteX="186dp"
+        tools:layout_editor_absoluteY="98dp" />
+
     <GridView
         android:id="@+id/availSeatsGridView"
         android:layout_width="401dp"
@@ -16,7 +26,9 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="13dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editSeatsButton" />
+        app:layout_constraintTop_toBottomOf="@+id/editSeatsButton" >
+
+    </GridView>
 
     <Button
         android:id="@+id/submitAttendance"

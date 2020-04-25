@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorOSU"
+    tools:context=".StudentProfileTeacherView">
+
+    <ImageView
+        android:id="@+id/studentProfilePictureInTeacherView"
+        android:adjustViewBounds="true"
+        android:maxWidth="150dp"
+        android:maxHeight="150dp"
+        android:scaleType="fitCenter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="57dp"
+        android:layout_marginBottom="67dp"
+        app:layout_constraintBottom_toTopOf="@+id/studentNameInTeacherView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
+
+    <TextView
+        android:id="@+id/studentNameInTeacherView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="37dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/studentEmailInTeacherView"
+        app:layout_constraintEnd_toEndOf="@+id/studentProfilePictureInTeacherView"
+        app:layout_constraintTop_toBottomOf="@+id/studentProfilePictureInTeacherView" />
+
+    <TextView
+        android:id="@+id/studentEmailInTeacherView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="38dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/studentAttendance"
+        app:layout_constraintStart_toStartOf="@+id/studentNameInTeacherView"
+        app:layout_constraintTop_toBottomOf="@+id/studentNameInTeacherView" />
+
+    <TextView
+        android:id="@+id/studentAttendance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="144dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/inClassButton"
+        app:layout_constraintEnd_toEndOf="@+id/studentEmailInTeacherView"
+        app:layout_constraintTop_toBottomOf="@+id/studentEmailInTeacherView" />
+
+    <Button
+        android:id="@+id/inClassButton"
+        android:layout_width="243dp"
+        android:layout_height="69dp"
+        android:layout_marginBottom="35dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="In Class"
+        app:layout_constraintBottom_toTopOf="@+id/notInClassButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/studentAttendance" />
+
+    <Button
+        android:id="@+id/notInClassButton"
+        android:layout_width="243dp"
+        android:layout_height="69dp"
+        android:layout_marginBottom="50dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="Not In Class"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inClassButton" />
+</androidx.constraintlayout.widget.ConstraintLayout>

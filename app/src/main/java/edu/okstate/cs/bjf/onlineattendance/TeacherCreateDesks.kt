@@ -13,6 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_teacher_create_desks.*
+import kotlinx.android.synthetic.main.activity_teacher_profile.*
 
 
 class TeacherCreateDesks : AppCompatActivity() {
@@ -20,6 +21,7 @@ class TeacherCreateDesks : AppCompatActivity() {
     // Variables for the columns/rows of seats in the class. Set as string, convert to Int when needed.
     var numColumns = "0"
     var numRows = "0"
+    private var sessionsToDate = "0"
 
     private lateinit var auth: FirebaseAuth
     var user = FirebaseAuth.getInstance().currentUser
@@ -37,12 +39,17 @@ class TeacherCreateDesks : AppCompatActivity() {
         // Submit Button goes to TeacherCreateDesks
         submitAttendance.setOnClickListener {
             // Do Nothing.
+            updateNumberOfSessions()
         }
 
-        //
         editSeatsButton.setOnClickListener {
             val setColumnsAndRowsForSeatsIntent = Intent(this, SetColumnsAndRowsForSeats::class.java)
             startActivity(setColumnsAndRowsForSeatsIntent)
+        }
+
+        testStudentButton.setOnClickListener {
+            val studentProfileTeacherViewIntent = Intent(this, StudentProfileTeacherView::class.java)
+            startActivity(studentProfileTeacherViewIntent)
         }
     }
 
@@ -126,6 +133,66 @@ class TeacherCreateDesks : AppCompatActivity() {
                                 "Document",
                                 document.id + " => " + document.data
                             )
+                        }
+
+                    }
+                } else {
+                    Log.w("Empty", "Error getting documents.", task.exception)
+                }
+            }
+    }
+
+    private fun getNumberOfSessions() {
+
+        val uid = user!!.uid
+
+        db.collection("courses")
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (document in task.result!!) {
+
+                        if (document["teacher"] == uid) {
+                            // On this case, then we are on the class for the teacher
+                            sessionsToDate = document["sessions"].toString()
+                        } else {
+                            Log.d(
+                                "Document",
+                                document.id + " => " + document.data
+                            )
+                            println("This is awkward...")
+                        }
+
+                    }
+                } else {
+                    Log.w("Empty", "Error getting documents.", task.exception)
+                }
+            }
+    }
+
+    private fun updateNumberOfSessions() {
+
+        val uid = user!!.uid
+
+        db.collection("courses")
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (document in task.result!!) {
+
+                        if (document["teacher"] == uid) {
+                            // On this case, then we are on the class for the teacher
+                            getNumberOfSessions()
+                            var courseRef = db.collection("courses").document(document.id.toString())
+                            sessionsToDate = (sessionsToDate.toInt() + 1).toString()
+                            courseRef.update("sessions", sessionsToDate)
+                            println("Submitted data!")
+                        } else {
+                            Log.d(
+                                "Document",
+                                document.id + " => " + document.data
+                            )
+                            println("This is awkward...")
                         }
 
                     }

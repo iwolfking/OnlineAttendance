@@ -7,4 +7,46 @@
     android:background="@color/colorOSU"
     tools:context=".TeacherCreateDesks">
 
+    <GridView
+        android:id="@+id/availSeatsGridView"
+        android:layout_width="401dp"
+        android:layout_height="428dp"
+        tools:layout_editor_absoluteX="5dp"
+        tools:layout_editor_absoluteY="168dp" />
+
+    <Button
+        android:id="@+id/submitAttendance"
+        android:layout_width="225dp"
+        android:layout_height="76dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="@string/submit"
+        tools:layout_editor_absoluteX="93dp"
+        tools:layout_editor_absoluteY="629dp" />
+
+    <ImageView
+        android:id="@+id/teacherProfilePictureCreateDesksImageView"
+        android:layout_width="106dp"
+        android:layout_height="109dp"
+        app:srcCompat="@drawable/ic_launcher_foreground"
+        tools:layout_editor_absoluteX="18dp"
+        tools:layout_editor_absoluteY="22dp" />
+
+    <TextView
+        android:id="@+id/teachersNameCreateDesksTextView"
+        android:layout_width="162dp"
+        android:layout_height="36dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        tools:layout_editor_absoluteX="186dp"
+        tools:layout_editor_absoluteY="34dp" />
+
+    <ImageButton
+        android:id="@+id/editSeatsButton"
+        android:background="@null"
+        android:layout_width="64dp"
+        android:layout_height="62dp"
+        app:srcCompat="@android:drawable/ic_menu_manage"
+        tools:layout_editor_absoluteX="331dp"
+        tools:layout_editor_absoluteY="93dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

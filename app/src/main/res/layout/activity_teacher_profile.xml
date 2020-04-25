@@ -7,7 +7,7 @@
     android:background="@color/colorOSU"
     tools:context=".TeacherProfile">
 
-    <!-- TODO (1): Fix Constraints Teacher Profile; None Set -->
+    <!-- COMPLETED (1): Fix Constraints Teacher Profile; None Set -->
 
     <ImageView
         android:id="@+id/teacherProfilePicture"

@@ -7,7 +7,7 @@
     android:background="@color/colorOSU"
     tools:context=".StudentProfile">
 
-    <!-- TODO(2): Fix Cosntraints Student Profile; None Set. -->
+    <!-- COMPLETED(2): Fix Cosntraints Student Profile; None Set. -->
 
     <ImageView
         android:id="@+id/profilePictureImageView"

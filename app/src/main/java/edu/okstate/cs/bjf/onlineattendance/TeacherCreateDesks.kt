@@ -2,16 +2,18 @@ package edu.okstate.cs.bjf.onlineattendance
 
 import android.content.Intent
 import android.graphics.BitmapFactory
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_teacher_create_desks.*
-import kotlinx.android.synthetic.main.activity_teacher_profile.*
+
 
 class TeacherCreateDesks : AppCompatActivity() {
 
@@ -118,6 +120,7 @@ class TeacherCreateDesks : AppCompatActivity() {
                             numColumns = document["columns"] as String
                             numRows = document["rows"] as String
                             println("Seats Columns: " + numColumns + " Rows: " + numRows)
+                            createDesks(numColumns.toInt(), numRows.toInt())
                         } else {
                             Log.d(
                                 "Document",
@@ -132,10 +135,27 @@ class TeacherCreateDesks : AppCompatActivity() {
             }
     }
 
-    /** TODO(2): Implement a Kotlin Class/structure to allow a teacher to create
-     *           the number of desks for columns/rows that the students may choose
-     *           from; then submit this to the database, and create a grid layout
-     *           of desks for the teacher to see.
-      */
+
+    private fun createDesks(columns: Int, rows: Int) {
+
+        /** TODO(2): Need to have a way to update the GridView or any other view in the
+         *           TeacherCreateDesks activity. We are able to set the number of columns/rows
+         *           and this gets pushed to the database, and their values are used when called
+         *           back down.
+         */
+
+        // Sets number of columns in the grid view.
+        availSeatsGridView.numColumns = columns
+
+        // Number of total seats in the class.
+        var totalSeats = columns * rows
+
+        // Loop used to generate the seats in the layout.
+        // TODO: Find way to variably add buttons to th grid view or any other view
+        for(i in 1..totalSeats) {
+            println("Added Seat Button")
+        }
+    }
+
 
 }

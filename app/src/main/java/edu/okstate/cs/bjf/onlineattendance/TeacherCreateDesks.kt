@@ -15,6 +15,10 @@ import kotlinx.android.synthetic.main.activity_teacher_profile.*
 
 class TeacherCreateDesks : AppCompatActivity() {
 
+    // Variables for the columns/rows of seats in the class. Set as string, convert to Int when needed.
+    var numColumns = "0"
+    var numRows = "0"
+
     private lateinit var auth: FirebaseAuth
     var user = FirebaseAuth.getInstance().currentUser
     var db = FirebaseFirestore.getInstance()
@@ -49,6 +53,7 @@ class TeacherCreateDesks : AppCompatActivity() {
             val uid = user!!.uid
             getTeacherName()
             getProfilePicture()
+            getSeats()
         }
     }
 
@@ -98,6 +103,33 @@ class TeacherCreateDesks : AppCompatActivity() {
             println("ERROR")
             println("Error" + uid + " doesn't exist.")
         }
+    }
+
+    private fun getSeats() {
+        val uid = user!!.uid
+
+        db.collection("courses")
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (document in task.result!!) {
+
+                        if (document["teacher"] == uid) {
+                            numColumns = document["columns"] as String
+                            numRows = document["rows"] as String
+                            println("Seats Columns: " + numColumns + " Rows: " + numRows)
+                        } else {
+                            Log.d(
+                                "Document",
+                                document.id + " => " + document.data
+                            )
+                        }
+
+                    }
+                } else {
+                    Log.w("Empty", "Error getting documents.", task.exception)
+                }
+            }
     }
 
     /** TODO(2): Implement a Kotlin Class/structure to allow a teacher to create

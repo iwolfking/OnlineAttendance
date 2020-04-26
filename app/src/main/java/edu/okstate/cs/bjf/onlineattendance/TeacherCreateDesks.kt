@@ -2,21 +2,18 @@ package edu.okstate.cs.bjf.onlineattendance
 
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.view.ViewGroup
+import android.view.Gravity
 import android.widget.Button
 import android.widget.GridLayout
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_teacher_create_desks.*
-import kotlinx.android.synthetic.main.activity_teacher_profile.*
-import java.security.AccessController.getContext
 
 
 class TeacherCreateDesks : AppCompatActivity() {
@@ -25,6 +22,7 @@ class TeacherCreateDesks : AppCompatActivity() {
     var numColumns = "0"
     var numRows = "0"
     private var sessionsToDate = "0"
+    var seatTaken: Boolean = false
 
     private lateinit var auth: FirebaseAuth
     var user = FirebaseAuth.getInstance().currentUser
@@ -218,6 +216,8 @@ class TeacherCreateDesks : AppCompatActivity() {
         seatsGridLayout.columnCount = columns
         seatsGridLayout.rowCount = rows
 
+
+
         // Number of total seats in the class.
         var totalSeats = columns * rows
 
@@ -226,16 +226,88 @@ class TeacherCreateDesks : AppCompatActivity() {
         // Loop used to generate the seats in the layout.
         // TODO: Find way to variably add buttons to th grid view or any other view
         for(i in 1..totalSeats) {
-            println("Added Seat Button")
             val seat = Button(this)
-            println("FLAG: No Error Here 2")
             seat.text = "Seat #: " + i.toString()
-            println("FLAG: No Error Here 3")
+            db.collection("seats")
+                .get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        for (document in task.result!!) {
+
+                            if (document["seat"] == i.toString()) {
+                                // On this case, then we know the seat is taken.
+                                if (document["student"].toString() != "null") {
+                                    println(document["student"].toString())
+                                    // change color to red for button
+                                    seatTaken = true
+                                    var red = Color.parseColor("#FF0000")
+                                    seat.setBackgroundColor(red)
+                                    seat.setOnClickListener {
+                                        val studentProfileTeacherViewIntent = Intent(this, StudentProfileTeacherView::class.java)
+                                        studentProfileTeacherViewIntent.putExtra("studentSeat", i.toString())
+                                        startActivity(studentProfileTeacherViewIntent)
+                                    }
+                                } else {
+                                    // let it be green by default
+                                    seatTaken = false
+                                    var green = Color.parseColor("#008000")
+                                    seat.setBackgroundColor(green)
+                                }
+
+                            } else {
+                                Log.d(
+                                    "Document",
+                                    document.id + " => " + document.data
+                                )
+                                //seatTaken = false
+                            }
+
+                        }
+                    } else {
+                        Log.w("Empty", "Error getting documents.", task.exception)
+                    }
+                }
             seatsGridLayout.addView(seat)
-            //seatsGridLayout.addView(seat, i)
-            println("FLAG: No Error Here 4")
+
         }
     }
 
+    /**
+    private fun checkSeatTaken(seatNum: Int) {
+        db.collection("seats")
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (document in task.result!!) {
+
+                        if (document["seat"] == seatNum.toString()) {
+                            // On this case, then we know the seat is taken.
+                            if (document["color"].toString() == "red") {
+                                // change color to red for button
+                                seatTaken = true
+                                var red = Color.parseColor("#FF0000")
+                                seat.setBackgroundColor(red)
+                            } else {
+                                // let it be green by default
+                                seatTaken = false
+                                var green = Color.parseColor("#008000")
+                                seat.setBackgroundColor(green)
+                            }
+
+                        } else {
+                            Log.d(
+                                "Document",
+                                document.id + " => " + document.data
+                            )
+                            //seatTaken = false
+                        }
+
+                    }
+                } else {
+                    Log.w("Empty", "Error getting documents.", task.exception)
+                }
+            }
+    }
+    */
 
 }

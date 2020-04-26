@@ -16,10 +16,12 @@ import kotlinx.android.synthetic.main.activity_teacher_profile.*
 
 class StudentProfileTeacherView : AppCompatActivity() {
 
-    val testStudentJoeExotic = "g8IuOC8EnfhCOFaEQgv9u0ZVeGH2"
+    // val testStudentJoeExotic = "g8IuOC8EnfhCOFaEQgv9u0ZVeGH2"
+    var student = "null"
     private var courseDocumentID = "GjDJjFRg0ojhZ7GtS54m"
     var sessionsToDate = "1"
     private var studnetsAttendanceToDate = "0"
+    var seatNumber = 0
 
     private lateinit var auth: FirebaseAuth
     var user = FirebaseAuth.getInstance().currentUser
@@ -33,6 +35,9 @@ class StudentProfileTeacherView : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         mStorageRef = FirebaseStorage.getInstance().reference;
         updateUI()
+
+        seatNumber = intent.getStringExtra("studentSeat").toInt()
+        println("INTENT SEAT NUMBER: " + seatNumber.toString())
 
         inClassButton.setOnClickListener {
             // Increment student's attendance number by 1 if they are in class.
@@ -57,6 +62,7 @@ class StudentProfileTeacherView : AppCompatActivity() {
             // authenticate with your backend server, if you have one. Use
             // FirebaseUser.getIdToken() instead.
             val uid = user!!.uid
+            getStudent()
             getCourseName()
             getStudentName()
             getStudentEmail()
@@ -92,9 +98,33 @@ class StudentProfileTeacherView : AppCompatActivity() {
             }
     }
 
+    private fun getStudent() {
+        db.collection("seats")
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (document in task.result!!) {
+
+                        if (document["seat"] == seatNumber.toString()) {
+                            student = document["student"].toString()
+                            updateUI()
+                        } else {
+                            Log.d(
+                                "Document",
+                                document.id + " => " + document.data
+                            )
+                        }
+
+                    }
+                } else {
+                    Log.w("Empty", "Error getting documents.", task.exception)
+                }
+            }
+    }
+
     // Displays Student's Name
     private fun getStudentName() {
-        val uid = testStudentJoeExotic
+        val uid = student
 
         db.collection("students")
             .get()
@@ -121,7 +151,7 @@ class StudentProfileTeacherView : AppCompatActivity() {
 
     // Displays Student's Email Address
     private fun getStudentEmail() {
-        val uid = testStudentJoeExotic
+        val uid = student
 
         db.collection("students")
             .get()
@@ -147,7 +177,7 @@ class StudentProfileTeacherView : AppCompatActivity() {
 
     // Displays student's profile picture.
     private fun getProfilePicture() {
-        val uid = testStudentJoeExotic
+        val uid = student
         // Create a storage reference from our app
 
 
@@ -171,7 +201,7 @@ class StudentProfileTeacherView : AppCompatActivity() {
     // Used to find the times the student has attended the course.
     private fun getAttendance() {
 
-        val uid = testStudentJoeExotic
+        val uid = student
 
         db.collection("attendance")
             .get()
@@ -210,7 +240,7 @@ class StudentProfileTeacherView : AppCompatActivity() {
 
     // Gets the value of the total number of sessions the class has had to date.
     private fun getCourseSessions() {
-        val uid = testStudentJoeExotic
+        val uid = student
 
         db.collection("courses")
             .get()
@@ -259,7 +289,7 @@ class StudentProfileTeacherView : AppCompatActivity() {
     // Function used to update the attendance of the student if verified by the teacher.
     private fun updateNumberOfAttendance() {
 
-        val uid = testStudentJoeExotic
+        val uid = student
 
         db.collection("attendance")
             .get()

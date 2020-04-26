@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.GridLayout
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -14,6 +16,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_teacher_create_desks.*
 import kotlinx.android.synthetic.main.activity_teacher_profile.*
+import java.security.AccessController.getContext
 
 
 class TeacherCreateDesks : AppCompatActivity() {
@@ -210,17 +213,27 @@ class TeacherCreateDesks : AppCompatActivity() {
          *           and this gets pushed to the database, and their values are used when called
          *           back down.
          */
-
+        // https://stackoverflow.com/questions/35692984/programmatically-adding-textview-to-grid-layout-alignment-not-proper
         // Sets number of columns in the grid view.
-        availSeatsGridView.numColumns = columns
+        seatsGridLayout.columnCount = columns
+        seatsGridLayout.rowCount = rows
 
         // Number of total seats in the class.
         var totalSeats = columns * rows
+
+        println("FLAG: No Error Here.")
 
         // Loop used to generate the seats in the layout.
         // TODO: Find way to variably add buttons to th grid view or any other view
         for(i in 1..totalSeats) {
             println("Added Seat Button")
+            val seat = Button(this)
+            println("FLAG: No Error Here 2")
+            seat.text = "Seat #: " + i.toString()
+            println("FLAG: No Error Here 3")
+            seatsGridLayout.addView(seat)
+            //seatsGridLayout.addView(seat, i)
+            println("FLAG: No Error Here 4")
         }
     }
 

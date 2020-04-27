@@ -13,8 +13,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
         android:text="Number Of Rows:"
-        app:layout_constraintTop_toBottomOf="@+id/numColumnsEditText"
-        tools:layout_editor_absoluteX="33dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/numColumnsEditText" />
 
     <TextView
         android:id="@+id/numColumnsTextView"
@@ -22,8 +24,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="65dp"
         android:text="Number Of Columns:"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="33dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/numColumnsEditText"
@@ -32,8 +36,10 @@
         android:layout_marginTop="34dp"
         android:ems="10"
         android:inputType="number"
-        app:layout_constraintTop_toBottomOf="@+id/numColumnsTextView"
-        tools:layout_editor_absoluteX="33dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/numColumnsTextView" />
 
     <EditText
         android:id="@+id/numRowsEditText"
@@ -42,8 +48,10 @@
         android:layout_marginTop="36dp"
         android:ems="10"
         android:inputType="number"
-        app:layout_constraintTop_toBottomOf="@+id/numRowsTextView"
-        tools:layout_editor_absoluteX="33dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/numRowsTextView" />
 
     <Button
         android:id="@+id/submitColumnsAndRowsButton"
@@ -54,6 +62,8 @@
         android:backgroundTint="@color/colorPrimary"
         android:text="@string/submit"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/numRowsEditText"
-        tools:layout_editor_absoluteX="96dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/numRowsEditText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

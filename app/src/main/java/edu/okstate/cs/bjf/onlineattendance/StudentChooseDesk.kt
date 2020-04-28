@@ -14,42 +14,44 @@ import kotlinx.android.synthetic.main.activity_teacher_create_desks.*
 
 class StudentChooseDesk : AppCompatActivity() {
 
+    /**
+     * Variables that are required to use Firebase, perform Firebase calls in this activity.
+     */
+    private lateinit var auth: FirebaseAuth
+    var user = FirebaseAuth.getInstance().currentUser
+    var db = FirebaseFirestore.getInstance()
+    private var mStorageRef: StorageReference? = null
+
     // testing by using the teacher UID
     var teacher = "ZbnbwWBlsrbliKIBdRyJrlVCNtn1"
 
     // Variables for the columns/rows of seats in the class. Set as string, convert to Int when needed.
     var numColumns = "0"
     var numRows = "0"
+    // TODO: Implement a text field, to show the student how many times they have attended this course.
     private var sessionsToDate = "0"
     var seatTaken: Boolean = false
 
-    private lateinit var auth: FirebaseAuth
-    var user = FirebaseAuth.getInstance().currentUser
-    var db = FirebaseFirestore.getInstance()
-    private var mStorageRef: StorageReference? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_choose_desk)
 
+        // Initialize Firebase variables, and get the number of seats to know how to generate them.
         auth = FirebaseAuth.getInstance()
         mStorageRef = FirebaseStorage.getInstance().reference;
         getSeats()
 
     }
 
-    /** TODO(3): Implement a Kotlin Class/structure to allow a student to choose
-     *           from desks that get loaded from the database;
-     *           then submit this to the database to reflect on the teacher's side
-     *           which desks have a student in them. Create a grid layout
-     *           of desks for the student to see.
-     */
-
-    /** TODO(4): Create percentile method, to store the number of times the student
-     *           has attended the course, for the student & teacher to be able to see.
+    /**
+     * Function that gets the number of seats that are in this class, that was set by the teacher.
+     * It gets the number of columns/rows, and calculates the number of total seats.
      */
 
     private fun getSeats() {
+
+        // TODO: Update, so it gets the UID of the teacher from the class.
         val uid = teacher
 
         db.collection("courses")
@@ -61,7 +63,6 @@ class StudentChooseDesk : AppCompatActivity() {
                         if (document["teacher"] == uid) {
                             numColumns = document["columns"] as String
                             numRows = document["rows"] as String
-                            println("Seats Columns: " + numColumns + " Rows: " + numRows)
                             createDesks(numColumns.toInt(), numRows.toInt())
                         } else {
                             Log.d(
@@ -79,12 +80,18 @@ class StudentChooseDesk : AppCompatActivity() {
 
     private fun createDesks(columns: Int, rows: Int) {
 
-        /** TODO(2): Need to have a way to update the GridView or any other view in the
-         *           TeacherCreateDesks activity. We are able to set the number of columns/rows
-         *           and this gets pushed to the database, and their values are used when called
-         *           back down.
+        /**
+         * Reference material found on how to create a variable number of rows/columns for a
+         * GridLayout: https://stackoverflow.com/questions/35692984/programmatically-adding-textview-to-grid-layout-alignment-not-proper
+         * used in StudentChooseDesk.kt & TeacherCreateDesks.kt
          */
-        // https://stackoverflow.com/questions/35692984/programmatically-adding-textview-to-grid-layout-alignment-not-proper
+
+        /**
+         *  TODO: We need the GridView when loading to display if a seat has been taken, if it has
+         *  we need to make sure another student can't click it. As well as to make sure they can
+         *  only choose one seat.
+         */
+        //
         // Sets number of columns in the grid view.
         studentChairViewGridLayout.columnCount = columns
         studentChairViewGridLayout.rowCount = rows
@@ -93,10 +100,8 @@ class StudentChooseDesk : AppCompatActivity() {
         // Number of total seats in the class.
         var totalSeats = columns * rows
 
-        println("FLAG: No Error Here.")
-
         // Loop used to generate the seats in the layout.
-        // TODO: Find way to variably add buttons to th grid view or any other view
+
         for(i in 1..totalSeats) {
             val seat = Button(this)
             seat.text = i.toString()
@@ -114,11 +119,14 @@ class StudentChooseDesk : AppCompatActivity() {
                 seat.setBackgroundColor(green)
             }
             studentChairViewGridLayout.addView(seat)
-            println("BREAKPOINT: Here?")
 
         }
     }
 
+    /**
+     * Used to see if a seat has already been taken by another student. If it has, it will display
+     * the seat as red, as well as stop another student from being able to choose the seat.
+     */
 
     private fun checkSeatTaken(seat: Int) {
         db.collection("seats")
@@ -150,6 +158,12 @@ class StudentChooseDesk : AppCompatActivity() {
             }
     }
 
+    /**
+     * Function that is used when a student clicks on a chair, it pushes their studentID to the
+     * Firestore database for the seats.
+     */
+
+    // TODO: Only allow student to take chair, if it isn't already taken.
     private fun takeSeat(seatNumber: Int) {
         val uid = user!!.uid
 
@@ -163,13 +177,11 @@ class StudentChooseDesk : AppCompatActivity() {
                             // On this case, then we are on the class for the teacher
                             var seatsRef = db.collection("seats").document(document.id.toString())
                             seatsRef.update("student", uid)
-                            println("Submitted data!")
                         } else {
                             Log.d(
                                 "Document",
                                 document.id + " => " + document.data
                             )
-                            println("This is awkward...")
                         }
 
                     }
@@ -179,14 +191,4 @@ class StudentChooseDesk : AppCompatActivity() {
             }
     }
 
-    /** TODO(4): Implement a Kotlin Class/structure to allow a student to choose
-     *           from desks that get loaded from the database;
-     *           then submit this to the database to reflect on the teacher's side
-     *           which desks have a student in them. Create a grid layout
-     *           of desks for the student to see.
-     */
-
-    /** TODO(5): Create percentile method, to store the number of times the student
-     *           has attended the course, for the student & teacher to be able to see.
-     */
 }

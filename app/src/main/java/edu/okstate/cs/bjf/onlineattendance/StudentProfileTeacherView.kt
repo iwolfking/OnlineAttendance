@@ -16,30 +16,56 @@ import kotlinx.android.synthetic.main.activity_teacher_profile.*
 
 class StudentProfileTeacherView : AppCompatActivity() {
 
-    // val testStudentJoeExotic = "g8IuOC8EnfhCOFaEQgv9u0ZVeGH2"
-    var student = "null"
-    private var courseDocumentID = "GjDJjFRg0ojhZ7GtS54m"
-    var sessionsToDate = "1"
-    private var studnetsAttendanceToDate = "0"
-    var seatNumber = 0
-    var studentAttendanceRecordFound = false
 
+    // Sent through Intent, this is the seat that was selected by the teacher.
+    var seatNumber = 0
+
+    /**
+     * Variables that are required to use Firebase, perform Firebase calls in this activity.
+     */
     private lateinit var auth: FirebaseAuth
     var user = FirebaseAuth.getInstance().currentUser
     var db = FirebaseFirestore.getInstance()
     private var mStorageRef: StorageReference? = null
 
+    /**
+     * Variables used in relation to the student's profile. student is going to be the ID pulled
+     * from the Firebase database. sATD is going to be the times this student has attended this
+     * particular course. Defaults to 0, assuming it may be their first time attending the course.
+     * sARF is going to allow us to know if we need to create an attendance record, if this is their
+     * first time attending the course or not.
+     */
+    private var student = "null"
+    private var studentsAttendanceToDate = "0"
+    private var studentAttendanceRecordFound = false
+
+    /**
+     * Variables that are related to the current course, that is being attended by the student.
+     * cDID is pulled from the teacher that is signed in, default currently to our test teacher's
+     * course. sTD is pulled from the Firebase database, and is related to how many times the course
+     * has occurred. This is generated when the teacher submits attendance at the end of each course
+     * it increments the sTD by one value.
+     */
+    private var courseDocumentID = "GjDJjFRg0ojhZ7GtS54m"
+    var sessionsToDate = "1"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_profile_teacher_view)
 
+        /**
+         * First, we get the seat that is passed through the Intent via the seat pressed by the
+         * teacher. Then we initialize our values needed for this activity. Namely, the Firebase/
+         * Firestore reference. Then we get the student through the seat number, and then the
+         * course name is generated from the current teacher signed in.
+         */
+        seatNumber = intent.getStringExtra("studentSeat").toInt()
         auth = FirebaseAuth.getInstance()
         mStorageRef = FirebaseStorage.getInstance().reference;
         getStudent()
         getCourseName()
 
-        seatNumber = intent.getStringExtra("studentSeat").toInt()
-
+        // "In Class" button's action, if pressed by the teacher.
         inClassButton.setOnClickListener {
             // Increment student's attendance number by 1 if they are in class.
             updateNumberOfAttendance()
@@ -47,24 +73,16 @@ class StudentProfileTeacherView : AppCompatActivity() {
             startActivity(teacherCreateDesksIntent)
         }
 
+        // "Not In Class" button's action, if pressed by the teacher.
         notInClassButton.setOnClickListener {
-            // Do not increment student's attendance number, as they aren't in class.
-            // TODO: Create Method To Clear Seat Button from GridView
+            // Does not increment student's attendance number, as they aren't in class.
+
+            // Clearing seat, so that another student may select this seat. Then go back an activity.
             clearSeat(seatNumber.toString())
             val teacherCreateDesksIntent = Intent(this, TeacherCreateDesks::class.java)
             startActivity(teacherCreateDesksIntent)
         }
     }
-
-    /**
-    // Updates the UI, when onCreate is called on the activity.
-    private fun updateUI() {
-        // The user's ID, unique to the Firebase project. Do NOT use this value to
-        // authenticate with your backend server, if you have one. Use
-        // FirebaseUser.getIdToken() instead.
-        val uid = user!!.uid
-
-    } */
 
     // Displays the course name, depending on the teacher signed in.
     private fun getCourseName() {
@@ -94,6 +112,7 @@ class StudentProfileTeacherView : AppCompatActivity() {
             }
     }
 
+    // Function that gets the student's information, and displays it on the activity.
     private fun getStudent() {
         db.collection("seats")
             .get()
@@ -121,7 +140,7 @@ class StudentProfileTeacherView : AppCompatActivity() {
             }
     }
 
-    // Displays Student's Name
+    // Gets the student's name, and is displayed by getStudent()
     private fun getStudentName() {
         val uid = student
 
@@ -148,7 +167,7 @@ class StudentProfileTeacherView : AppCompatActivity() {
             }
     }
 
-    // Displays Student's Email Address
+    // Gets the student's email, and is displayed by getStudent()
     private fun getStudentEmail() {
         val uid = student
 
@@ -174,7 +193,7 @@ class StudentProfileTeacherView : AppCompatActivity() {
             }
     }
 
-    // Displays student's profile picture.
+    // Gets the student's profile picture, and is displayed by getStudent()
     private fun getProfilePicture() {
         val uid = student
         // Create a storage reference from our app
@@ -210,9 +229,9 @@ class StudentProfileTeacherView : AppCompatActivity() {
 
                         if (document["student"] == uid) {
                             // On this case, then we are on the class for the teacher
-                            studnetsAttendanceToDate = document["attendance"].toString()
+                            studentsAttendanceToDate = document["attendance"].toString()
                             // COMPLETED: It is not updating properly with the database, may be a sync issue.
-                            var percentAttended: Double = (studnetsAttendanceToDate.toDouble() / sessionsToDate.toDouble()) * 100
+                            var percentAttended: Double = (studentsAttendanceToDate.toDouble() / sessionsToDate.toDouble()) * 100
                             studentAttendance.text = percentAttended.toString() + "%"
                         } else {
                             Log.d(

@@ -49,6 +49,7 @@ class StudentProfileTeacherView : AppCompatActivity() {
         notInClassButton.setOnClickListener {
             // Do not increment student's attendance number, as they aren't in class.
             // TODO: Create Method To Clear Seat Button from GridView
+            clearSeat(seatNumber.toString())
             val teacherCreateDesksIntent = Intent(this, TeacherCreateDesks::class.java)
             startActivity(teacherCreateDesksIntent)
         }
@@ -310,6 +311,35 @@ class StudentProfileTeacherView : AppCompatActivity() {
                                 document.id + " => " + document.data
                             )
                             println("This is awkward...")
+                        }
+
+                    }
+                } else {
+                    Log.w("Empty", "Error getting documents.", task.exception)
+                }
+            }
+    }
+
+    /**
+     * Function used when the student isn't in class, to make the seat available again, so
+     * another student may choose the seat.
+     */
+
+    private fun clearSeat(seatNumberToClear: String) {
+        db.collection("seats")
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (document in task.result!!) {
+
+                        if (document["seat"] == seatNumber.toString()) {
+                            var seatsRef = db.collection("seats").document(document.id.toString())
+                            seatsRef.update("student", "null")
+                        } else {
+                            Log.d(
+                                "Document",
+                                document.id + " => " + document.data
+                            )
                         }
 
                     }

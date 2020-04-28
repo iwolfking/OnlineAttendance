@@ -28,9 +28,6 @@ class StudentChooseDesk : AppCompatActivity() {
     var db = FirebaseFirestore.getInstance()
     private var mStorageRef: StorageReference? = null
 
-    // testing by using the teacher UID
-    var teacher = "ZbnbwWBlsrbliKIBdRyJrlVCNtn1"
-
     // Variables for the columns/rows of seats in the class. Set as string, convert to Int when needed.
     var numColumns = "0"
     var numRows = "0"

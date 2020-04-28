@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -29,9 +30,32 @@ class StudentProfile : AppCompatActivity() {
         updateUI()
 
         submitCourseEditText.setOnClickListener {
-            val studentChooseDeskIntent = Intent(this, StudentChooseDesk::class.java)
-            studentChooseDeskIntent.putExtra("courseName", courseNameEditText.text.toString())
-            startActivity(studentChooseDeskIntent)
+            db.collection("courses")
+                .get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        for (document in task.result!!) {
+
+                            if (document["course"] == courseNameEditText.text.toString()) {
+                                // In this scenario, the course is found and exists. Can do the intent.
+                                val studentChooseDeskIntent = Intent(this, StudentChooseDesk::class.java)
+                                studentChooseDeskIntent.putExtra("courseName", courseNameEditText.text.toString())
+                                startActivity(studentChooseDeskIntent)
+                            } else {
+                                // In this scenario, the entered course wasn't found, and we don't want the student to move on.
+                                Log.d(
+                                    "Document",
+                                    document.id + " => " + document.data
+                                )
+                                Toast.makeText(this, "Sorry, that course isn't known.", Toast.LENGTH_SHORT).show()
+                            }
+
+                        }
+                    } else {
+                        Log.w("Empty", "Error getting documents.", task.exception)
+                    }
+                }
+
         }
     }
 

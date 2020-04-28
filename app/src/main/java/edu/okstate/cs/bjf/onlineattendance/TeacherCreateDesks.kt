@@ -18,16 +18,21 @@ import kotlinx.android.synthetic.main.activity_teacher_create_desks.*
 
 class TeacherCreateDesks : AppCompatActivity() {
 
+    /**
+     * Variables that are required to use Firebase, perform Firebase calls in this activity.
+     */
+    private lateinit var auth: FirebaseAuth
+    var user = FirebaseAuth.getInstance().currentUser
+    var db = FirebaseFirestore.getInstance()
+    private var mStorageRef: StorageReference? = null
+
     // Variables for the columns/rows of seats in the class. Set as string, convert to Int when needed.
     var numColumns = "0"
     var numRows = "0"
     private var sessionsToDate = "0"
     var seatTaken: Boolean = false
 
-    private lateinit var auth: FirebaseAuth
-    var user = FirebaseAuth.getInstance().currentUser
-    var db = FirebaseFirestore.getInstance()
-    private var mStorageRef: StorageReference? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,17 +42,19 @@ class TeacherCreateDesks : AppCompatActivity() {
         mStorageRef = FirebaseStorage.getInstance().reference;
         updateUI()
 
-        // Submit Button goes to TeacherCreateDesks
+        // Submits the attendance, but updates the sessions for the course by 1.
+        // TODO: Create prompt, if they want to submit attendance for all students.
         submitAttendance.setOnClickListener {
-            // Do Nothing.
             updateNumberOfSessions()
         }
 
+        // Allows the teacher to change the number of rows/columns of chairs in the classroom.
         editSeatsButton.setOnClickListener {
             val setColumnsAndRowsForSeatsIntent = Intent(this, SetColumnsAndRowsForSeats::class.java)
             startActivity(setColumnsAndRowsForSeatsIntent)
         }
 
+        // Refreshes the activity, in case they changed the number of chairs.
         testStudentButton.setOnClickListener {
             finish();
             startActivity(intent);
@@ -67,6 +74,7 @@ class TeacherCreateDesks : AppCompatActivity() {
         }
     }
 
+    // Method used to get the teacher's name from the Firestore database, then it displays their name.
     private fun getTeacherName() {
         val uid = user!!.uid
 
@@ -93,28 +101,23 @@ class TeacherCreateDesks : AppCompatActivity() {
             }
     }
 
+    // Method used to get the teacher's profile picture, and display it.
     private fun getProfilePicture() {
         val uid = user!!.uid
-        // Create a storage reference from our app
 
-
-        /*In this case we'll use this kind of reference*/
         //Download file in Memory
         val profilePictureRef = mStorageRef?.child("pics/$uid")
-
+        // Not truly a megabyte, had to increase for larger photo downloads.
         val ONE_MEGABYTE = 1024 * 1024 * 50.toLong()
         profilePictureRef?.getBytes(ONE_MEGABYTE)?.addOnSuccessListener {
-            // Data for "images/island.jpg" is returns, use this as needed
-
-            println("Picture exists")
             teacherProfilePictureCreateDesksImageView.setImageBitmap(BitmapFactory.decodeByteArray(it, 0, it.size))
         }?.addOnFailureListener {
-            // Handle any errors
-            println("ERROR")
+            // Doesn't display photo, may occur for multiple reasons.
             println("Error" + uid + " doesn't exist.")
         }
     }
 
+    // Method used to get the number of seats that were set in SetColumnsAndRowsForSeats.
     private fun getSeats() {
         val uid = user!!.uid
 
@@ -127,7 +130,7 @@ class TeacherCreateDesks : AppCompatActivity() {
                         if (document["teacher"] == uid) {
                             numColumns = document["columns"] as String
                             numRows = document["rows"] as String
-                            println("Seats Columns: " + numColumns + " Rows: " + numRows)
+                            // Create Desks on the page, now that we know how many to make.
                             createDesks(numColumns.toInt(), numRows.toInt())
                         } else {
                             Log.d(
@@ -143,6 +146,7 @@ class TeacherCreateDesks : AppCompatActivity() {
             }
     }
 
+    // Gets the total number of sessions this course has had so far. Need for updating when submit.
     private fun getNumberOfSessions() {
 
         val uid = user!!.uid
@@ -161,7 +165,6 @@ class TeacherCreateDesks : AppCompatActivity() {
                                 "Document",
                                 document.id + " => " + document.data
                             )
-                            println("This is awkward...")
                         }
 
                     }
@@ -171,6 +174,7 @@ class TeacherCreateDesks : AppCompatActivity() {
             }
     }
 
+    // If the teacher submits attendance, then it will increase the sessions to date by 1.
     private fun updateNumberOfSessions() {
 
         val uid = user!!.uid
@@ -187,13 +191,11 @@ class TeacherCreateDesks : AppCompatActivity() {
                             var courseRef = db.collection("courses").document(document.id.toString())
                             sessionsToDate = (sessionsToDate.toInt() + 1).toString()
                             courseRef.update("sessions", sessionsToDate)
-                            println("Submitted data!")
                         } else {
                             Log.d(
                                 "Document",
                                 document.id + " => " + document.data
                             )
-                            println("This is awkward...")
                         }
 
                     }
@@ -206,12 +208,12 @@ class TeacherCreateDesks : AppCompatActivity() {
 
     private fun createDesks(columns: Int, rows: Int) {
 
-        /** TODO(2): Need to have a way to update the GridView or any other view in the
-         *           TeacherCreateDesks activity. We are able to set the number of columns/rows
-         *           and this gets pushed to the database, and their values are used when called
-         *           back down.
+        /**
+         * Reference material found on how to create a variable number of rows/columns for a
+         * GridLayout: https://stackoverflow.com/questions/35692984/programmatically-adding-textview-to-grid-layout-alignment-not-proper
+         * used in StudentChooseDesk.kt & TeacherCreateDesks.kt
          */
-        // https://stackoverflow.com/questions/35692984/programmatically-adding-textview-to-grid-layout-alignment-not-proper
+
         // Sets number of columns in the grid view.
         seatsGridLayout.columnCount = columns
         seatsGridLayout.rowCount = rows
@@ -220,10 +222,7 @@ class TeacherCreateDesks : AppCompatActivity() {
         // Number of total seats in the class.
         var totalSeats = columns * rows
 
-        println("FLAG: No Error Here.")
-
         // Loop used to generate the seats in the layout.
-        // COMPLETED: Find way to variably add buttons to th grid view or any other view
         for(i in 1..totalSeats) {
             val seat = Button(this)
             seat.text = "Seat #: " + i.toString()

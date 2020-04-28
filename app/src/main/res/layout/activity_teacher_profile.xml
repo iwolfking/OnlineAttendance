@@ -7,92 +7,135 @@
     android:background="@color/colorOSU"
     tools:context=".TeacherProfile">
 
-    <!-- TODO (1): Fix Constraints Teacher Profile; None Set -->
-
     <ImageView
         android:id="@+id/teacherProfilePicture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:layout_marginBottom="570dp"
         android:adjustViewBounds="true"
         android:maxWidth="150dp"
         android:maxHeight="150dp"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/ic_launcher_foreground"
-        tools:layout_editor_absoluteX="151dp"
-        tools:layout_editor_absoluteY="60dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
 
     <TextView
         android:id="@+id/teacherName"
         android:layout_width="204dp"
         android:layout_height="44dp"
+        android:layout_marginTop="171dp"
+        android:layout_marginBottom="500dp"
         android:text="TextView"
         android:textAlignment="center"
-        tools:layout_editor_absoluteX="103dp"
-        tools:layout_editor_absoluteY="187dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/startTime"
+        android:id="@+id/startTimeEntry"
         android:layout_width="123dp"
         android:layout_height="31dp"
+        android:layout_marginTop="398dp"
+        android:layout_marginBottom="292dp"
         android:text="Start Time"
         android:textAlignment="center"
-        tools:layout_editor_absoluteX="143dp"
-        tools:layout_editor_absoluteY="384dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/submitTimes"
         android:layout_width="235dp"
         android:layout_height="44dp"
+        android:layout_marginTop="639dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="@color/colorPrimary"
         android:text="Submit"
-        tools:layout_editor_absoluteX="87dp"
-        tools:layout_editor_absoluteY="606dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.663" />
 
     <TextView
         android:id="@+id/courseName"
         android:layout_width="207dp"
         android:layout_height="28dp"
+        android:layout_marginTop="351dp"
+        android:layout_marginBottom="352dp"
         android:text="TextView"
         android:textAlignment="center"
         android:textSize="18sp"
-        tools:layout_editor_absoluteX="101dp"
-        tools:layout_editor_absoluteY="344dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/endTime"
+        android:id="@+id/endTimeEntry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="570dp"
+        android:layout_marginBottom="104dp"
         android:ems="10"
         android:inputType="time"
-        tools:layout_editor_absoluteX="98dp"
-        tools:layout_editor_absoluteY="529dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/startTime"
+        android:id="@+id/startTimeEntry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="448dp"
+        android:layout_marginBottom="239dp"
         android:ems="10"
         android:inputType="time"
-        tools:layout_editor_absoluteX="98dp"
-        tools:layout_editor_absoluteY="425dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/emailAddress"
         android:layout_width="208dp"
         android:layout_height="24dp"
+        android:layout_marginTop="237dp"
+        android:layout_marginBottom="451dp"
         android:text="TextView"
         android:textAlignment="center"
-        tools:layout_editor_absoluteX="101dp"
-        tools:layout_editor_absoluteY="252dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/endTime"
+        android:id="@+id/endTimeEntry"
         android:layout_width="128dp"
         android:layout_height="34dp"
+        android:layout_marginTop="511dp"
+        android:layout_marginBottom="186dp"
         android:text="End Time"
         android:textAlignment="center"
-        tools:layout_editor_absoluteX="141dp"
-        tools:layout_editor_absoluteY="480dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView3"
@@ -100,7 +143,10 @@
         android:layout_height="34dp"
         android:text="Course Name:"
         android:textAlignment="center"
-        tools:layout_editor_absoluteX="141dp"
-        tools:layout_editor_absoluteY="293dp" />
+        app:layout_constraintBottom_toTopOf="@+id/courseName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailAddress" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

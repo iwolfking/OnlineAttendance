@@ -210,12 +210,9 @@ class StudentProfileTeacherView : AppCompatActivity() {
 
                         if (document["student"] == uid) {
                             // On this case, then we are on the class for the teacher
-                            println("TESTING... SESSIONS TO DATE: " + sessionsToDate)
                             studnetsAttendanceToDate = document["attendance"].toString()
-                            // TODO: It is not updating properly with the database, may be a sync issue.
-                            println("ATD: " + studnetsAttendanceToDate + " STD: " + sessionsToDate)
-                            var percentAttended = (studnetsAttendanceToDate.toInt() / sessionsToDate.toInt()) * 100
-                            println("PERCENTAGE ATTENDED: " + percentAttended.toString())
+                            // COMPLETED: It is not updating properly with the database, may be a sync issue.
+                            var percentAttended: Double = (studnetsAttendanceToDate.toDouble() / sessionsToDate.toDouble()) * 100
                             studentAttendance.text = percentAttended.toString() + "%"
                         } else {
                             Log.d(
@@ -311,7 +308,7 @@ class StudentProfileTeacherView : AppCompatActivity() {
 
                     }
 
-                    // TODO: Create attendance record, if one wasn't found.
+                    // COMPLETED: Create attendance record, if one wasn't found.
                     if (!studentAttendanceRecordFound) {
                         val attendance = hashMapOf(
                             "attendance" to "1",

@@ -91,13 +91,7 @@ class StudentChooseDesk : AppCompatActivity() {
          * GridLayout: https://stackoverflow.com/questions/35692984/programmatically-adding-textview-to-grid-layout-alignment-not-proper
          * used in StudentChooseDesk.kt & TeacherCreateDesks.kt
          */
-
-        /**
-         *  TODO: We need the GridView when loading to display if a seat has been taken, if it has
-         *  we need to make sure another student can't click it. As well as to make sure they can
-         *  only choose one seat.
-         */
-        //
+        
         // Sets number of columns in the grid view.
         studentChairViewGridLayout.columnCount = columns
         studentChairViewGridLayout.rowCount = rows
@@ -168,46 +162,10 @@ class StudentChooseDesk : AppCompatActivity() {
     }
 
     /**
-     * Used to see if a seat has already been taken by another student. If it has, it will display
-     * the seat as red, as well as stop another student from being able to choose the seat.
-     */
-
-    private fun checkSeatTaken(seat: Int) {
-        db.collection("seats")
-            .get()
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    for (document in task.result!!) {
-
-                        if (document["seat"] == seat.toString()) {
-                            // On this case, then we know the seat is taken.
-                            if (document["student"] == true) {
-                                seatTaken = true
-                            } else {
-                                seatTaken = false
-                            }
-
-                        } else {
-                            Log.d(
-                                "Document",
-                                document.id + " => " + document.data
-                            )
-                            //seatTaken = false
-                        }
-
-                    }
-                } else {
-                    Log.w("Empty", "Error getting documents.", task.exception)
-                }
-            }
-    }
-
-    /**
      * Function that is used when a student clicks on a chair, it pushes their studentID to the
      * Firestore database for the seats.
      */
 
-    // TODO: Only allow student to take chair, if it isn't already taken.
     private fun takeSeat(seatNumber: Int) {
         val uid = user!!.uid
 

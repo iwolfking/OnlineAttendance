@@ -212,6 +212,7 @@ class StudentProfileTeacherView : AppCompatActivity() {
                         if (document["student"] == uid) {
                             // On this case, then we are on the class for the teacher
                             getCourseSessions()
+                            println("TESTING... SESSIONS TO DATE: " + sessionsToDate)
                             studnetsAttendanceToDate = document["attendance"].toString()
                             // TODO: It is not updating properly with the database, may be a sync issue.
                             println("ATD: " + studnetsAttendanceToDate + " STD: " + sessionsToDate)
@@ -240,7 +241,7 @@ class StudentProfileTeacherView : AppCompatActivity() {
 
     // Gets the value of the total number of sessions the class has had to date.
     private fun getCourseSessions() {
-        val uid = student
+        val uid = user!!.uid
 
         db.collection("courses")
             .get()

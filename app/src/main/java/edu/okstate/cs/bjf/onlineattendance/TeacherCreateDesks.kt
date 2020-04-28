@@ -217,14 +217,13 @@ class TeacherCreateDesks : AppCompatActivity() {
         seatsGridLayout.rowCount = rows
 
 
-
         // Number of total seats in the class.
         var totalSeats = columns * rows
 
         println("FLAG: No Error Here.")
 
         // Loop used to generate the seats in the layout.
-        // TODO: Find way to variably add buttons to th grid view or any other view
+        // COMPLETED: Find way to variably add buttons to th grid view or any other view
         for(i in 1..totalSeats) {
             val seat = Button(this)
             seat.text = "Seat #: " + i.toString()
@@ -267,47 +266,10 @@ class TeacherCreateDesks : AppCompatActivity() {
                         Log.w("Empty", "Error getting documents.", task.exception)
                     }
                 }
+
             seatsGridLayout.addView(seat)
 
         }
     }
-
-    /**
-    private fun checkSeatTaken(seatNum: Int) {
-        db.collection("seats")
-            .get()
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    for (document in task.result!!) {
-
-                        if (document["seat"] == seatNum.toString()) {
-                            // On this case, then we know the seat is taken.
-                            if (document["color"].toString() == "red") {
-                                // change color to red for button
-                                seatTaken = true
-                                var red = Color.parseColor("#FF0000")
-                                seat.setBackgroundColor(red)
-                            } else {
-                                // let it be green by default
-                                seatTaken = false
-                                var green = Color.parseColor("#008000")
-                                seat.setBackgroundColor(green)
-                            }
-
-                        } else {
-                            Log.d(
-                                "Document",
-                                document.id + " => " + document.data
-                            )
-                            //seatTaken = false
-                        }
-
-                    }
-                } else {
-                    Log.w("Empty", "Error getting documents.", task.exception)
-                }
-            }
-    }
-    */
 
 }

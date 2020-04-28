@@ -30,6 +30,7 @@ class StudentProfile : AppCompatActivity() {
 
         submitCourseEditText.setOnClickListener {
             val studentChooseDeskIntent = Intent(this, StudentChooseDesk::class.java)
+            studentChooseDeskIntent.putExtra("courseName", courseNameEditText.text.toString())
             startActivity(studentChooseDeskIntent)
         }
     }

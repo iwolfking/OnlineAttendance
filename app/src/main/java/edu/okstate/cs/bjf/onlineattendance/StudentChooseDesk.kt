@@ -1,6 +1,7 @@
 package edu.okstate.cs.bjf.onlineattendance
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,9 +12,13 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_student_choose_desk.*
+import kotlinx.android.synthetic.main.activity_student_profile_teacher_view.*
 import kotlinx.android.synthetic.main.activity_teacher_create_desks.*
 
 class StudentChooseDesk : AppCompatActivity() {
+
+    // Sent through Intent, this is the seat that was selected by the student.
+    var courseName = "CS4153"
 
     /**
      * Variables that are required to use Firebase, perform Firebase calls in this activity.
@@ -35,17 +40,131 @@ class StudentChooseDesk : AppCompatActivity() {
 
     // Used to determine, if a student has already chosen a seat.
     private var studentHasPickedSeat = false
+    private var studentsAttendanceToDate = "0"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_choose_desk)
 
+        courseName = intent.getStringExtra("courseName")
+
         // Initialize Firebase variables, and get the number of seats to know how to generate them.
         auth = FirebaseAuth.getInstance()
         mStorageRef = FirebaseStorage.getInstance().reference;
+        getStudentName()
+        getProfilePicture()
+        getCourseSessions()
+        getAttendance()
         getSeats()
 
+    }
+
+    // Gets the student's name, and is displayed by getStudent()
+    private fun getStudentName() {
+        val uid = user!!.uid
+
+        db.collection("students")
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (document in task.result!!) {
+
+                        if (document["student"] == uid) {
+                            println("Student Name: " + document["firstName"] + " " + document["lastName"])
+                            studentNameInChooseDeskActivity.text = (document["firstName"].toString() + " " + document["lastName"].toString())
+                        } else {
+                            Log.d(
+                                "Document",
+                                document.id + " => " + document.data
+                            )
+                        }
+
+                    }
+                } else {
+                    Log.w("Empty", "Error getting documents.", task.exception)
+                }
+            }
+    }
+
+    // Gets the student's profile picture, and is displayed by getStudent()
+    private fun getProfilePicture() {
+        val uid = user!!.uid
+        // Create a storage reference from our app
+
+
+        /*In this case we'll use this kind of reference*/
+        //Download file in Memory
+        val profilePictureRef = mStorageRef?.child("pics/$uid")
+
+        val ONE_MEGABYTE = 1024 * 1024 * 50.toLong()
+        profilePictureRef?.getBytes(ONE_MEGABYTE)?.addOnSuccessListener {
+            // Data for "images/island.jpg" is returns, use this as needed
+
+            studentProfilePictureInChooseDeskActivity.setImageBitmap(BitmapFactory.decodeByteArray(it, 0, it.size))
+        }?.addOnFailureListener {
+            // Handle any errors
+            println("ERROR")
+            println("Error" + uid + " doesn't exist.")
+        }
+    }
+
+    // Used to find the times the student has attended the course.
+    private fun getAttendance() {
+
+        val uid = user!!.uid
+
+        db.collection("attendance")
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (document in task.result!!) {
+
+                        if (document["student"] == uid) {
+                            // On this case, then we are on the class for the teacher
+                            studentsAttendanceToDate = document["attendance"].toString()
+                            var percentAttended: Double = (studentsAttendanceToDate.toDouble() / sessionsToDate.toDouble()) * 100
+                            studentAttendanceInChooseDeskActivity.text = percentAttended.toString() + "%"
+                        } else {
+                            Log.d(
+                                "Document",
+                                document.id + " => " + document.data
+                            )
+                        }
+
+                    }
+
+                } else {
+                    Log.w("Empty", "Error getting documents.", task.exception)
+
+                }
+            }
+    }
+
+    // Gets the value of the total number of sessions the class has had to date.
+    private fun getCourseSessions() {
+        val course = courseName
+
+        db.collection("courses")
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (document in task.result!!) {
+
+                        if (document["course"] == course) {
+                            sessionsToDate = document["sessions"].toString()
+                        } else {
+                            Log.d(
+                                "Document",
+                                document.id + " => " + document.data
+                            )
+                        }
+
+                    }
+                } else {
+                    Log.w("Empty", "Error getting documents.", task.exception)
+                }
+            }
     }
 
     /**
@@ -91,7 +210,7 @@ class StudentChooseDesk : AppCompatActivity() {
          * GridLayout: https://stackoverflow.com/questions/35692984/programmatically-adding-textview-to-grid-layout-alignment-not-proper
          * used in StudentChooseDesk.kt & TeacherCreateDesks.kt
          */
-        
+
         // Sets number of columns in the grid view.
         studentChairViewGridLayout.columnCount = columns
         studentChairViewGridLayout.rowCount = rows

@@ -298,6 +298,7 @@ class StudentChooseDesk : AppCompatActivity() {
                             // On this case, then we are on the class for the teacher
                             var seatsRef = db.collection("seats").document(document.id.toString())
                             seatsRef.update("student", uid)
+                            studentHasPickedSeat = true
                         } else {
                             Log.d(
                                 "Document",

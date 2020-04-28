@@ -8,6 +8,8 @@ import android.util.Log
 import android.widget.Button
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_set_columns_and_rows_for_seats.*
@@ -36,6 +38,10 @@ class SetColumnsAndRowsForSeats : AppCompatActivity() {
             }
             val teacherCreateDesksIntent = Intent(this, TeacherCreateDesks::class.java)
             startActivity(teacherCreateDesksIntent)
+        }
+
+        deleteSeats.setOnClickListener {
+            deleteSeats()
         }
     }
 
@@ -84,6 +90,24 @@ class SetColumnsAndRowsForSeats : AppCompatActivity() {
             }
             .addOnFailureListener { e ->
                 Log.w(CreateTeacherProfileActivity.TAG, "Error adding document", e)
+            }
+    }
+
+    private fun deleteSeats() {
+        db.collection("seats")
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (document in task.result!!) {
+                        db.collection("seats").document(document.id.toString())
+                            .delete()
+                            .addOnSuccessListener { Log.d("Deleting Document", "DocumentSnapshot successfully deleted!")}
+                            .addOnFailureListener { e -> Log.w("Unable to delete Document", "Error deleting document", e)}
+                    }
+                } else {
+                    Log.w("Empty", "Error getting documents.", task.exception)
+
+                }
             }
     }
 }

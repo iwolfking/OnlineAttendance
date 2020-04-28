@@ -49,8 +49,8 @@ class TeacherCreateDesks : AppCompatActivity() {
         }
 
         testStudentButton.setOnClickListener {
-            val studentProfileTeacherViewIntent = Intent(this, StudentProfileTeacherView::class.java)
-            startActivity(studentProfileTeacherViewIntent)
+            finish();
+            startActivity(intent);
         }
     }
 

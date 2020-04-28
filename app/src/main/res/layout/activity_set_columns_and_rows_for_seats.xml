@@ -11,10 +11,9 @@
         android:id="@+id/numRowsTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="151dp"
         android:layout_marginTop="44dp"
         android:text="Number Of Rows:"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/numColumnsEditText" />
 
@@ -22,10 +21,9 @@
         android:id="@+id/numColumnsTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="140dp"
         android:layout_marginTop="65dp"
         android:text="Number Of Columns:"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,11 +31,10 @@
         android:id="@+id/numColumnsEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="99dp"
         android:layout_marginTop="34dp"
         android:ems="10"
         android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/numColumnsTextView" />
 
@@ -45,11 +42,10 @@
         android:id="@+id/numRowsEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="99dp"
         android:layout_marginTop="36dp"
         android:ems="10"
         android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/numRowsTextView" />
 
@@ -57,13 +53,21 @@
         android:id="@+id/submitColumnsAndRowsButton"
         android:layout_width="219dp"
         android:layout_height="75dp"
-        android:layout_marginTop="314dp"
-        android:layout_marginBottom="35dp"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="30dp"
         android:backgroundTint="@color/colorPrimary"
         android:text="@string/submit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deleteSeats" />
+
+    <Button
+        android:id="@+id/deleteSeats"
+        android:layout_width="219dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="209dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="Delete Seats"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/numRowsEditText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

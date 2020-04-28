@@ -17,13 +17,13 @@
         android:layout_marginTop="85dp"
         android:layout_marginEnd="152dp"
         android:layout_marginBottom="576dp"
-        android:backgroundTint="#E91E63"
         android:contentDescription="g8IuOC8EnfhCOFaEQgv9u0ZVeGH2"
+        android:background="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
+        app:srcCompat="@android:drawable/ic_popup_sync" />
 
     <Button
         android:id="@+id/submitAttendance"

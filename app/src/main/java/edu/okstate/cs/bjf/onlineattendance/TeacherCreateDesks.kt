@@ -7,8 +7,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.widget.Button
-import android.widget.GridLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -222,9 +222,16 @@ class TeacherCreateDesks : AppCompatActivity() {
         // Number of total seats in the class.
         var totalSeats = columns * rows
 
+
+
         // Loop used to generate the seats in the layout.
         for(i in 1..totalSeats) {
-            val seat = Button(this)
+            var seat = Button(this)
+            var factor = this.resources.displayMetrics.density
+            var params = ConstraintLayout.LayoutParams(((400 / seatsGridLayout.columnCount) * factor).toInt(), ((450 / seatsGridLayout.rowCount) * factor).toInt())
+            seat.layoutParams = (params)
+            seat.gravity = Gravity.CENTER
+
             seat.text = "Seat #: " + i.toString()
             db.collection("seats")
                 .get()
@@ -247,6 +254,7 @@ class TeacherCreateDesks : AppCompatActivity() {
                                     }
                                 } else {
                                     // let it be green by default
+
                                     seatTaken = false
                                     var green = Color.parseColor("#008000")
                                     seat.setBackgroundColor(green)
@@ -267,8 +275,15 @@ class TeacherCreateDesks : AppCompatActivity() {
                 }
 
             seatsGridLayout.addView(seat)
-
+            //println("Height Of Seat Button: " + seat.layoutParams.height.toString())
+            //var width = (400.0 / seatsGridLayout.columnCount).toInt()
+            //seat.width = width
+            //println("Width Of Seat Button: " + seat.layoutParams.width.toString())
         }
+    }
+
+    private fun dpFromPx(px: Float): Float {
+        return px / this.resources.displayMetrics.density
     }
 
 }

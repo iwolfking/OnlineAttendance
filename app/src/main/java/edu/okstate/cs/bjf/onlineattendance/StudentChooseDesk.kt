@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -220,6 +221,9 @@ class StudentChooseDesk : AppCompatActivity() {
         // Loop used to generate the seats in the layout.
         for(i in 1..totalSeats) {
             val seat = Button(this)
+            var factor = this.resources.displayMetrics.density
+            var params = ConstraintLayout.LayoutParams(((400 / studentChairViewGridLayout.columnCount) * factor).toInt(), ((450 / studentChairViewGridLayout.rowCount) * factor).toInt())
+            seat.layoutParams = (params)
             seat.text = "Seat #: " + i.toString()
             db.collection("seats")
                 .get()

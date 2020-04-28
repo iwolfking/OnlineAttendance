@@ -174,8 +174,7 @@ class StudentChooseDesk : AppCompatActivity() {
 
     private fun getSeats() {
 
-        // TODO: Update, so it gets the UID of the teacher from the class.
-        val uid = teacher
+        val course = courseName
 
         db.collection("courses")
             .get()
@@ -183,7 +182,7 @@ class StudentChooseDesk : AppCompatActivity() {
                 if (task.isSuccessful) {
                     for (document in task.result!!) {
 
-                        if (document["teacher"] == uid) {
+                        if (document["course"] == course) {
                             numColumns = document["columns"] as String
                             numRows = document["rows"] as String
                             createDesks(numColumns.toInt(), numRows.toInt())

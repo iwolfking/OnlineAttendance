@@ -22,6 +22,7 @@ class StudentProfileTeacherView : AppCompatActivity() {
     var sessionsToDate = "1"
     private var studnetsAttendanceToDate = "0"
     var seatNumber = 0
+    var studentAttendanceRecordFound = false
 
     private lateinit var auth: FirebaseAuth
     var user = FirebaseAuth.getInstance().currentUser
@@ -34,10 +35,10 @@ class StudentProfileTeacherView : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         mStorageRef = FirebaseStorage.getInstance().reference;
-        updateUI()
+        getStudent()
+        getCourseName()
 
         seatNumber = intent.getStringExtra("studentSeat").toInt()
-        println("INTENT SEAT NUMBER: " + seatNumber.toString())
 
         inClassButton.setOnClickListener {
             // Increment student's attendance number by 1 if they are in class.
@@ -55,22 +56,15 @@ class StudentProfileTeacherView : AppCompatActivity() {
         }
     }
 
+    /**
     // Updates the UI, when onCreate is called on the activity.
     private fun updateUI() {
-        if (user != null) {
+        // The user's ID, unique to the Firebase project. Do NOT use this value to
+        // authenticate with your backend server, if you have one. Use
+        // FirebaseUser.getIdToken() instead.
+        val uid = user!!.uid
 
-            // The user's ID, unique to the Firebase project. Do NOT use this value to
-            // authenticate with your backend server, if you have one. Use
-            // FirebaseUser.getIdToken() instead.
-            val uid = user!!.uid
-            getStudent()
-            getCourseName()
-            getStudentName()
-            getStudentEmail()
-            getProfilePicture()
-            getAttendance()
-        }
-    }
+    } */
 
     // Displays the course name, depending on the teacher signed in.
     private fun getCourseName() {
@@ -85,6 +79,7 @@ class StudentProfileTeacherView : AppCompatActivity() {
                         if (document["teacher"] == uid) {
                             println("Course Name: " + document["course"])
                             courseDocumentID = document.id.toString()
+                            getCourseSessions()
                         } else {
                             Log.d(
                                 "Document",
@@ -108,7 +103,10 @@ class StudentProfileTeacherView : AppCompatActivity() {
 
                         if (document["seat"] == seatNumber.toString()) {
                             student = document["student"].toString()
-                            updateUI()
+                            getStudentName()
+                            getStudentEmail()
+                            getProfilePicture()
+                            getAttendance()
                         } else {
                             Log.d(
                                 "Document",
@@ -212,12 +210,12 @@ class StudentProfileTeacherView : AppCompatActivity() {
 
                         if (document["student"] == uid) {
                             // On this case, then we are on the class for the teacher
-                            getCourseSessions()
                             println("TESTING... SESSIONS TO DATE: " + sessionsToDate)
                             studnetsAttendanceToDate = document["attendance"].toString()
                             // TODO: It is not updating properly with the database, may be a sync issue.
                             println("ATD: " + studnetsAttendanceToDate + " STD: " + sessionsToDate)
                             var percentAttended = (studnetsAttendanceToDate.toInt() / sessionsToDate.toInt()) * 100
+                            println("PERCENTAGE ATTENDED: " + percentAttended.toString())
                             studentAttendance.text = percentAttended.toString() + "%"
                         } else {
                             Log.d(
@@ -227,12 +225,7 @@ class StudentProfileTeacherView : AppCompatActivity() {
                         }
 
                     }
-                    /**
-                    if (!studentAttendedBefore) {
-                        println("Creating Attendance for " + testStudentJoeExotic)
-                        createAttendanceForStudent(testStudentJoeExotic, courseDocumentID, "0")
-                        studentAttendance.text = "100%"
-                    } */
+
                 } else {
                     Log.w("Empty", "Error getting documents.", task.exception)
 
@@ -301,6 +294,9 @@ class StudentProfileTeacherView : AppCompatActivity() {
 
                         if (document["student"] == uid) {
                             // On this case, then we are on the class for the teacher
+
+                            studentAttendanceRecordFound = true
+
                             var attendanceRef = db.collection("attendance").document(document.id.toString())
                             var attendanceToDate = (document["attendance"].toString().toInt() + 1).toString()
                             attendanceRef.update("attendance", attendanceToDate)
@@ -314,6 +310,26 @@ class StudentProfileTeacherView : AppCompatActivity() {
                         }
 
                     }
+
+                    // TODO: Create attendance record, if one wasn't found.
+                    if (!studentAttendanceRecordFound) {
+                        val attendance = hashMapOf(
+                            "attendance" to "1",
+                            "course" to courseDocumentID,
+                            "student" to student
+                        )
+
+                        // Add a new document with a generated ID
+                        db.collection("attendance")
+                            .add(attendance)
+                            .addOnSuccessListener { documentReference ->
+                                Log.d(CreateTeacherProfileActivity.TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w(CreateTeacherProfileActivity.TAG, "Error adding document", e)
+                            }
+                    }
+
                 } else {
                     Log.w("Empty", "Error getting documents.", task.exception)
                 }

@@ -9,6 +9,21 @@
 
     <!-- TODO: Fix Constraints for GridLayout. -->
 
+    <TextView
+        android:id="@+id/attendanceAmount"
+        android:layout_width="235dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="69dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="640dp"
+        android:text="Times Attended: "
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.gridlayout.widget.GridLayout
         android:id="@+id/studentChairViewGridLayout"
         android:layout_width="400dp"

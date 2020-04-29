@@ -1,5 +1,7 @@
 package edu.okstate.cs.bjf.onlineattendance
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -32,7 +34,16 @@ class TeacherCreateDesks : AppCompatActivity() {
     private var sessionsToDate = "0"
     var seatTaken: Boolean = false
 
-
+    var dialogClickListener =
+        DialogInterface.OnClickListener { dialog, which ->
+            when (which) {
+                DialogInterface.BUTTON_POSITIVE -> {
+                    updateNumberOfSessions()
+                }
+                DialogInterface.BUTTON_NEGATIVE -> {
+                }
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,9 +54,11 @@ class TeacherCreateDesks : AppCompatActivity() {
         updateUI()
 
         // Submits the attendance, but updates the sessions for the course by 1.
-        // TODO: Create prompt, if they want to submit attendance for all students.
         submitAttendance.setOnClickListener {
-            updateNumberOfSessions()
+
+            val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+            builder.setMessage("Are you sure you want to submit?").setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).show()
         }
 
         // Allows the teacher to change the number of rows/columns of chairs in the classroom.

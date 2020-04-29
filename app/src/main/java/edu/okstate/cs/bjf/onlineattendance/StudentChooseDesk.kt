@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -32,8 +33,8 @@ class StudentChooseDesk : AppCompatActivity() {
     // Variables for the columns/rows of seats in the class. Set as string, convert to Int when needed.
     var numColumns = "0"
     var numRows = "0"
-    // TODO: Implement a text field, to show the student how many times they have attended this course.
     private var sessionsToDate = "0"
+    private var sessionAmountTV = this.findViewById<TextView>(R.id.attendanceAmount)
     var seatTaken: Boolean = false
 
     // Used to determine, if a student has already chosen a seat.
@@ -123,6 +124,9 @@ class StudentChooseDesk : AppCompatActivity() {
                             studentsAttendanceToDate = document["attendance"].toString()
                             var percentAttended: Double = (studentsAttendanceToDate.toDouble() / sessionsToDate.toDouble()) * 100
                             studentAttendanceInChooseDeskActivity.text = percentAttended.toString() + "%"
+                            //Set number of attended courses textview
+                            val sessionString : String = "Attendance Amount: " + studentsAttendanceToDate.toString()
+                            sessionAmountTV.text = sessionString
                         } else {
                             Log.d(
                                 "Document",

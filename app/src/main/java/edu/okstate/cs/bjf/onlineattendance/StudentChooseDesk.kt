@@ -34,14 +34,11 @@ class StudentChooseDesk : AppCompatActivity() {
     var numColumns = "0"
     var numRows = "0"
     private var sessionsToDate = "0"
-    private var sessionAmountTV = this.findViewById<TextView>(R.id.attendanceAmount)
     var seatTaken: Boolean = false
 
     // Used to determine, if a student has already chosen a seat.
     private var studentHasPickedSeat = false
     private var studentsAttendanceToDate = "0"
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_choose_desk)
@@ -56,7 +53,6 @@ class StudentChooseDesk : AppCompatActivity() {
         getCourseSessions()
         getAttendance()
         getSeats()
-
     }
 
     // Gets the student's name, and is displayed by getStudent()
@@ -125,6 +121,7 @@ class StudentChooseDesk : AppCompatActivity() {
                             var percentAttended: Double = (studentsAttendanceToDate.toDouble() / sessionsToDate.toDouble()) * 100
                             studentAttendanceInChooseDeskActivity.text = percentAttended.toString() + "%"
                             //Set number of attended courses textview
+                            var sessionAmountTV = this.findViewById<TextView>(R.id.attendanceAmount)
                             val sessionString : String = "Attendance Amount: " + studentsAttendanceToDate.toString()
                             sessionAmountTV.text = sessionString
                         } else {

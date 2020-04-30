@@ -62,11 +62,16 @@
         android:id="@+id/studentAttendanceInChooseDeskActivity"
         android:layout_width="235dp"
         android:layout_height="22dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="108dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="601dp"
         android:text="TextView"
         android:textAlignment="center"
-        app:layout_constraintTop_toBottomOf="@+id/studentNameInChooseDeskActivity"
-        tools:layout_editor_absoluteX="160dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/submitChairButton"
@@ -75,9 +80,7 @@
         android:layout_marginStart="161dp"
         android:layout_marginTop="31dp"
         android:layout_marginEnd="162dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/submit"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/studentChairViewGridLayout" />

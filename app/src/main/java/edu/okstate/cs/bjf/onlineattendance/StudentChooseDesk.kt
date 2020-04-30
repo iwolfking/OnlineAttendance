@@ -282,7 +282,7 @@ class StudentChooseDesk : AppCompatActivity() {
     }
 
     /**
-     * Function that is used when a student clicks on a chair, it pushes their studentID to the
+     * Function that is used when a student clicks on a chair( and presses submit) it pushes their studentID to the
      * Firestore database for the seats.
      */
 
@@ -298,8 +298,12 @@ class StudentChooseDesk : AppCompatActivity() {
                         if (document["seat"] == seatNumber.toString()) {
                             // On this case, then we are on the class for the teacher
                             var seatsRef = db.collection("seats").document(document.id.toString())
-                            seatsRef.update("student", uid)
-                            studentHasPickedSeat = true
+                            // Only submit to database if the submit button is press after clicking a seat
+                            submitChairButton.setOnClickListener{
+                                seatsRef.update("student", uid)
+                                studentHasPickedSeat = true
+                            }
+
                         } else {
                             Log.d(
                                 "Document",

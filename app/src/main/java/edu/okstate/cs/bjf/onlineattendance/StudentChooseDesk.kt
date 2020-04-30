@@ -35,6 +35,8 @@ class StudentChooseDesk : AppCompatActivity() {
     var numRows = "0"
     private var sessionsToDate = "0"
     var seatTaken: Boolean = false
+    private var previousSeat: Button? = null
+    private var currentSeat: Button? = null
 
     // Used to determine, if a student has already chosen a seat.
     private var studentHasPickedSeat = false
@@ -226,6 +228,7 @@ class StudentChooseDesk : AppCompatActivity() {
             var params = ConstraintLayout.LayoutParams(((400 / studentChairViewGridLayout.columnCount) * factor).toInt(), ((450 / studentChairViewGridLayout.rowCount) * factor).toInt())
             seat.layoutParams = (params)
             seat.text = "Seat #: " + i.toString()
+            seat.id = i
             db.collection("seats")
                 .get()
                 .addOnCompleteListener { task ->
@@ -256,9 +259,26 @@ class StudentChooseDesk : AppCompatActivity() {
                                         if (studentHasPickedSeat) {
                                             // Do nothing, student has already chosen a seat.
                                         } else {
+                                            if (previousSeat == null) {
+                                                previousSeat = seat
+                                                currentSeat = seat
+                                                var red = Color.parseColor("#FF0000")
+                                                seat.setBackgroundColor(red)
+                                            } else {
+                                                // previousSeat change to green.
+                                                var green = Color.parseColor("#008000")
+                                                previousSeat = currentSeat
+                                                previousSeat!!.setBackgroundColor(green)
+                                                println(previousSeat.toString() + " is the previous seat.")
+                                                previousSeat = currentSeat
+                                                println(previousSeat.toString() + " is the previous seat and changed to current seat " + currentSeat.toString())
+                                                currentSeat = seat
+                                                println("Current seat now the new seat " + currentSeat.toString())
+                                                // currentSeat/ change red.
+                                                var red = Color.parseColor("#FF0000")
+                                                seat.setBackgroundColor(red)
+                                            }
                                             takeSeat(i)
-                                            var red = Color.parseColor("#FF0000")
-                                            seat.setBackgroundColor(red)
                                         }
                                     }
                                 }
